@@ -1,0 +1,42 @@
+.blog-modal
+  display grid
+  position fixed
+  z-index 888
+  top 0
+  left 0 
+  bottom 0
+  right 0
+  margin auto
+  background-color rgba(0,0,0,.3)
+
+.blog-modal--wrap
+  justify-self center
+  align-self center
+  width 50%
+  padding padding-space * 2
+  box-shadow 0 0 4px border-main-color inset
+  border-radius border-radius-default
+  background-color bg-article-color
+
+.blog-modal--head
+  display flex
+  justify-content space-between
+  align-items center
+  padding padding-space
+
+.blog-modal--title
+  font-size font-size-h * 2
+
+.blog-modal--close
+  font-size font-size-h
+
+#username::placeholder
+  color font-placeholder-color
+
+#password::placeholder
+  color font-placeholder-color
+
+
+.blog-footer--confirm
+  border 1px solid lighten(border-main-color,60%)
+  color font-article-color

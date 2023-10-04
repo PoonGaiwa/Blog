@@ -1,0 +1,35 @@
+.blog-mian--container
+  padding padding-space
+  border-radius border-radius-default * .5
+  box-shadow 0 0 2px border-main-color
+
+.blog-content--item
+  margin-bottom margin-space
+  padding padding-space * 2 0
+  background-color bg-article-color
+  text-align center
+  color font-article-color
+  cursor pointer
+  &:hover
+    .blog-item--desc
+      color darken(font-article-color,80%)
+.blog-item--title
+  font-size font-size-h * 1.5
+.blog-item--date
+  font-size font-size-p
+.blog-item--illustration
+  height 220px
+  width auto
+  padding padding-space
+.blog-item--desc
+  padding padding-space * 3
+  text-align left
+  text-indent 2em
+.blog-item--tags
+  display flex
+  justify-content flex-end
+  padding 0 padding-space * 2
+  .blog-tags--like,
+  .blog-tags--comment
+    &:hover
+      color darken(font-article-color,80%)

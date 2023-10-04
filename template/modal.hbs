@@ -1,0 +1,21 @@
+<div class="blog-modal--wrap">
+  <div class="blog-modal--head">
+    <h4 class="blog-modal--title">{{title}}</h4>
+    <button class="blog-modal--close btn-close" data-btn-target="close" type="button"></button>
+  </div>
+  <div class="blog-modal--content modal-body">
+    <form class="form-horizontal">
+    {{#each formData}}
+    <div class="blog-content--{{query}}">
+      <label for="{{query}}" class="col-form-label">{{label}}</label>
+      <input id="{{query}}" type="{{type}}" class="form-control" placeholder="{{placeholder}}">
+    </div>
+    {{/each}}
+    </form>
+  </div>
+  <div class="blog-modal--foot modal-footer">
+    {{#each btns}}
+    <button class="blog-footer--{{targetName}} btn" data-btn-target="{{targetName}}" type="button">{{name}}</button>
+    {{/each}}
+  </div>
+</div>

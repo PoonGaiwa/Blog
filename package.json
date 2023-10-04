@@ -1,0 +1,35 @@
+{
+  "name": "myblog",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "compile-styl": "stylus -w ./stylus -o ./public/stylesheets",
+    "compile-hbs": "node ./script/execHbs.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "axios": "^1.5.1",
+    "bootstrap": "^5.0.2",
+    "bootstrap-icons": "^1.11.1",
+    "colors.css": "^3.0.0",
+    "cors": "^2.8.5",
+    "express-jwt": "^6.0.0",
+    "jquery": "^1.12.1",
+    "jQuery": "^1.7.4",
+    "jsencrypt": "^3.3.2",
+    "layui": "^2.8.17",
+    "node-rsa": "^1.1.1",
+    "normalize.css": "^8.0.1",
+    "validator.tool": "^2.2.5"
+  }
+}

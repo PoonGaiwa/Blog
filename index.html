@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="./node_modules/jsencrypt/bin/jsencrypt.min.js"></script>
+
+
+  <script>
+    const requestHost = 'http://127.0.0.1:3000'
+    const pubKeyName = 'UA_KEY'
+
+    const storage = {
+      get(key) {
+        return localStorage.getItem(key);
+      },
+      set(key, value) {
+        localStorage.setItem(key, JSON.stringify(value))
+      },
+      remove(key) {
+        localStorage.removeItem(key)
+      }
+    }
+
+    async function getPubKey() {
+      let key = storage.get(pubKeyName)
+      if (!key || key === 'undefined') {
+        try {
+          let result = await axios.post(`${requestHost}/getPublicKey`)
+          let key = result.data.data.pubKey
+          key = key.replace(/\. +/g, '')
+          key = key.replace(/[\r\n]/g, '')
+          storage.set(pubKeyName, key)
+          return key
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      return key
+    }
+
+    getPubKey().then(async (key) => {
+      let result = await axios.post(`${requestHost}/login`, {
+        username: 'kyogre',
+        pwd: encrypt(key, '123456!')
+      })
+      console.log(result);
+    })
+
+    // 参数 公钥 明文  返回 密文
+    function encrypt(publicKey, value) {
+      // 实例化
+      let encrypt = new JSEncrypt()
+      // 设置公钥
+      encrypt.setPublicKey(publicKey)
+      // 调用加密方法
+      return encrypt.encrypt(value)
+    }
+
+
+  </script>
+</body>
+
+</html>
