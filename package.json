@@ -15,7 +15,8 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
     "axios": "^1.5.1",
@@ -29,7 +30,6 @@
     "jsencrypt": "^3.3.2",
     "layui": "^2.8.17",
     "node-rsa": "^1.1.1",
-    "normalize.css": "^8.0.1",
-    "validator.tool": "^2.2.5"
+    "normalize.css": "^8.0.1"
   }
 }

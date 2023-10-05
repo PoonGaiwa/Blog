@@ -233,3 +233,17 @@ a:hover {
   border: 1px solid #9ea8b1;
   color: #555;
 }
+.blog-content--username,
+.blog-content--pwd {
+  position: relative;
+  padding-bottom: 24px;
+}
+.blog-content--username::after,
+.blog-content--pwd::after {
+  content: attr(data-msg);
+  position: absolute;
+  top: 78px;
+  left: 8px;
+  font-size: 14px;
+  color: #f00;
+}
