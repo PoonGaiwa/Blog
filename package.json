@@ -25,11 +25,12 @@
     "colors.css": "^3.0.0",
     "cors": "^2.8.5",
     "express-jwt": "^6.0.0",
-    "jquery": "^1.12.1",
+    "jquery": "npm:jQuery@^1.7.4",
     "jQuery": "^1.7.4",
     "jsencrypt": "^3.3.2",
     "layui": "^2.8.17",
     "node-rsa": "^1.1.1",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "store.js": "^1.0.4"
   }
 }

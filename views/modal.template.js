@@ -17,7 +17,7 @@ templates['modal.hbs'] = template({"1":function(container,depth0,helpers,partial
     + alias5(((helper = (helper = helpers.type || (depth0 != null ? depth0.type : depth0)) != null ? helper : alias3),(typeof helper === alias4 ? helper.call(alias2,{"name":"type","hash":{},"data":data}) : helper)))
     + "\" name=\""
     + alias5(((helper = (helper = helpers.query || (depth0 != null ? depth0.query : depth0)) != null ? helper : alias3),(typeof helper === alias4 ? helper.call(alias2,{"name":"query","hash":{},"data":data}) : helper)))
-    + "\" class=\"form-control\" autocomplete placeholder=\""
+    + "\" class=\"form-control\" placeholder=\""
     + alias5(((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : alias3),(typeof helper === alias4 ? helper.call(alias2,{"name":"placeholder","hash":{},"data":data}) : helper)))
     + "\">\r\n    </div>\r\n";
 },"3":function(container,depth0,helpers,partials,data) {

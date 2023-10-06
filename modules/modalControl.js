@@ -2,12 +2,14 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-06 15:33:41
+ * @LastEditTime: 2023-10-06 22:17:53
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import modalMap from './modal.config.js'
 import RegExpVerify from './validate.js'
+import Http from '../modules/Http.js'
+
 
 export default class Modal {
   constructor({ hbsTemp, modalWrap, successCallback = (data) => {
@@ -80,26 +82,7 @@ export default class Modal {
       acc[curr.name] = curr.value
       return acc
     }, {})
-    let result = new RegExpVerify(this.dataType, submitData)
-    if (result.status !== 0) {
-      this.msg = 'OK'
-      this.inputReset()
-      this.reset()
-    } else {
-      this.msg = result.error
-      let verifyEle = $('.blog-modal--content').children('div')
-      let msg = Object.keys(this.msg)
-      if (msg.length) {
-        $(`#${msg[0]}`).focus()
-      }
-      $.each(verifyEle, (idx, ele) => {
-        let type = $(ele).data('type')
-        let errorMsg = String(this.msg[`${type}`])
-        if (errorMsg !== 'undefined') {
-          ele.dataset['msg'] = errorMsg
-        }
-      })
-    }
+    this.verifyForm(submitData)
     this.inputReset()
     this.successCallback(this.msg)
   }
@@ -112,6 +95,46 @@ export default class Modal {
     let inputEle = $('.blog-modal--content').children()
     $.each(inputEle, (idx, ele) => {
       ele.value = ''
+    })
+  }
+  verifyForm(submitData) {
+    let result = new RegExpVerify(this.dataType, submitData)
+    if (result.status !== 0) {
+      this.userAction(submitData)
+      this.msg = '成功'
+      this.clean()
+      this.reset()
+    } else {
+      this.msg = result.error
+      let verifyEle = $('.blog-modal--content').children('div')
+      let msg = Object.keys(this.msg)
+      if (msg.length) {
+        $(`#${msg[0]}`).focus()
+      }
+      $.each(verifyEle, (idx, ele) => {
+        let inputType = $(ele).data('type')
+        let errorMsg = String(this.msg[`${inputType}`])
+        if (errorMsg !== 'undefined') {
+          ele.dataset['msg'] = errorMsg
+        }
+      })
+    }
+  }
+  userAction({ username, pwd }) {
+    new Http({
+      type: this.dataType,
+      data: {
+        username: username,
+        pwd: pwd,
+      },
+      callback(data) {
+        if (this.dataType === 'login') {
+          new Http({
+            type: 'user',
+            callback() { console.log('进入主页'); }
+          })
+        }
+      }
     })
   }
 }

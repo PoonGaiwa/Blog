@@ -1,8 +1,8 @@
 /*
  * @Author: gaiwa gaiwa@163.com
  * @Date: 2023-09-27 16:05:20
- * @LastEditors: gaiwa gaiwa@163.com
- * @LastEditTime: 2023-09-28 17:49:56
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-06 21:47:24
  * @FilePath: \express\myBlog\core\userControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -92,8 +92,11 @@ module.exports = {
       return users
     }
     let { user_id, password } = users.data
+    let inputPwd = await decrypt(pwd.trim())
+    let dataBasePwd = await decrypt(await decrypt(password.trim()))
     // 验证密码 数据库中存储二次加密 和传输 一次加密
     let isVerify = await decrypt(await decrypt(password.trim())) === await decrypt(pwd.trim())
+    console.log(inputPwd, dataBasePwd);
     if (isVerify) {
       return {
         ...getUserStatusMsg('USER_INN'),

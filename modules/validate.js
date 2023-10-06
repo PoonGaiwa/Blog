@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-05 00:44:27
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-06 15:11:54
+ * @LastEditTime: 2023-10-06 20:29:36
  * @FilePath: \express\myBlog\modules\validate.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -43,7 +43,7 @@ export default class RegExpVerify {
           tooLong: '最多只能%{count}个字符'
         },
         format: {
-          pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#?!@$%^&*-_])[a-zA-Z][a-zA-Z0-9_#?!@$%^&*-]+/,
+          pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#?!@$%^&*-_])[a-zA-Z0-9_#?!@$%^&*-]+/,
           flag: 'g',
           message: '请输入正确的密码格式 必须包含大小写字母、数字和特殊字符的组合,长度在8-12之间'
         }
