@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-06 00:55:54
+ * @LastEditTime: 2023-10-06 15:09:27
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -44,10 +44,17 @@ export default class Modal {
         }
         this.dataType = modalType
         this.render()
+        this.inputReset()
       }),
       this.wrap.on('click', '#confirm', (e) => {
         e.preventDefault()
         this.confirm()
+      }),
+      this.wrap.on('keydown', 'input', (e) => {
+        let inputEle = $(e.target).parent().parent().children()
+        $.each(inputEle, (idx, ele) => {
+          ele.dataset['msg'] = ''
+        })
       })
   }
   // 渲染
@@ -76,6 +83,8 @@ export default class Modal {
     let result = new RegExpVerify(this.dataType, submitData)
     if (result.status !== 0) {
       this.msg = 'OK'
+      this.inputReset()
+      this.reset()
     } else {
       this.msg = result.error
       let verifyEle = $('.blog-modal--content').children('div')
@@ -87,11 +96,19 @@ export default class Modal {
         }
       })
     }
+    this.inputReset()
     this.successCallback(this.msg)
   }
   // reset 重置
   reset() {
     this.wrap.hide()
     this.wrap.attr('hidden', true)
+  }
+  inputReset() {
+    let inputEle = $('.blog-modal--content').children()
+    $.each(inputEle, (idx, ele) => {
+      console.log(ele.value)
+      ele.value = ''
+    })
   }
 }

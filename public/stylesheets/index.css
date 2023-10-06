@@ -223,12 +223,6 @@ a:hover {
 .blog-modal--close {
   font-size: 16px;
 }
-#username::placeholder {
-  color: rgba(0,0,0,0.4);
-}
-#password::placeholder {
-  color: rgba(0,0,0,0.4);
-}
 .blog-footer--confirm {
   border: 1px solid #9ea8b1;
   color: #555;
