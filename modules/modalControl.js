@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-06 15:09:27
+ * @LastEditTime: 2023-10-06 15:29:40
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -88,10 +88,14 @@ export default class Modal {
     } else {
       this.msg = result.error
       let verifyEle = $('.blog-modal--content').children('div')
+      let errorMsg = Object.keys(this.msg)
+      if (errorMsg.length) {
+        console.log($(`#${errorMsg[0]}`));
+        $(`#${errorMsg[0]}`).focus()
+      }
       $.each(verifyEle, (idx, ele) => {
         let type = $(ele).data('type')
-        let errorMsg = this.msg[`${type}`]
-        if (String(errorMsg) !== 'undefined') {
+        if (String(this.msg[`${type}`]) !== 'undefined') {
           ele.dataset['msg'] = errorMsg
         }
       })
@@ -107,7 +111,6 @@ export default class Modal {
   inputReset() {
     let inputEle = $('.blog-modal--content').children()
     $.each(inputEle, (idx, ele) => {
-      console.log(ele.value)
       ele.value = ''
     })
   }
