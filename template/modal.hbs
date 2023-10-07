@@ -1,20 +1,20 @@
 <div class="blog-modal--wrap">
   <div class="blog-modal--head">
     <h4 class="blog-modal--title">{{title}}</h4>
-    <button class="blog-modal--close btn-close" data-btn-target="close" type="button"></button>
+    <button class="blog-modal--close btn-close" data-modal-btn="close" type="button"></button>
   </div>
   <form id="{{formType}}" action="javascript:;">
     <div class="blog-modal--content modal-body">
     {{#each formData}}
     <div class="blog-content--{{query}}" data-type="{{query}}" data-msg="">
       <label for="{{query}}" class="col-form-label">{{label}}</label>
-      <input id="{{query}}" type="{{type}}" name="{{query}}" class="form-control" placeholder="{{placeholder}}">
+      <input id="{{query}}" type="{{type}}" name="{{query}}" data-modal-input="{{query}}" class="form-control" placeholder="{{placeholder}}">
     </div>
     {{/each}}
     </div>
     <div class="blog-modal--foot modal-footer">
     {{#each btns}}
-    <button class="blog-footer--{{targetName}} btn" id="{{targetName}}" type="submit" data-btn-target="{{targetName}}" >{{name}}</button>
+    <button class="blog-footer--{{targetName}} btn" id="{{targetName}}" type="{{type}}" data-modal-btn="{{targetName}}" >{{name}}</button>
     {{/each}}
   </form>
   </div>

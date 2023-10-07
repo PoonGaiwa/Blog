@@ -27,7 +27,8 @@ export default {
     btns: [
       {
         targetName: 'confirm',
-        name: '提交'
+        name: '提交',
+        type: 'submit'
       }
     ]
   },
@@ -51,7 +52,8 @@ export default {
     btns: [
       {
         targetName: 'confirm',
-        name: '提交'
+        name: '提交',
+        type: 'submit'
       }
     ]
   }
