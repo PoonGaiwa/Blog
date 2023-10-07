@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 16:02:57
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-07 15:24:46
+ * @LastEditTime: 2023-10-07 16:46:59
  * @FilePath: \express\myBlog\modules\Http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -92,7 +92,6 @@ export default class Http {
       this.request.defaults.headers.common['Authorization'] = `Bearer ${store.get(TOKENNAME)}`
     }
     this.interceptors()
-    // this.send()
   }
   async send() {
     let { url, method, data } = this
@@ -125,16 +124,12 @@ export default class Http {
       // 判断任务状态码是否为正常 正常为200 自定义的用户注册成功状态码为4010
       if ((result.statusCode !== '4010') && (result.statusCode !== '4021')) {
         console.warn('请求错误', result.errMsg)
-        return result?.data
+        return result
       }
-      if (this.type === 'register') {
-        console.log(result.errMsg);
-      }
-      if (this.type === 'login') {
+      if (this.type === 'login' || this.type === 'register') {
         let token = result.data.token
         // 本地存储token
-        store.set(TOKENNAME, token)
-        console.log(result.errMsg);
+        store.set(TOKENNAME, token);
       }
       return result
     }, (err) => {

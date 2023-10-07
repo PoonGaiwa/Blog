@@ -74,20 +74,20 @@ a:hover {
   box-sizing: border-box;
   margin-right: 32px;
 }
-.blog-head--search .input-group {
+.input-group {
   overflow: hidden;
   height: 36px;
   border: 1px solid #999;
   border-radius: 8px;
 }
-.blog-head--search .input-group .blog-input--search {
+.blog-input--search {
   padding-left: 8px;
   height: 36px;
   border: 0;
   background-color: #24292f;
   color: #999;
 }
-.blog-head--search .input-group svg {
+.blog-input--search svg {
   color: #999;
   background-color: #24292f;
   cursor: pointer;
@@ -95,6 +95,30 @@ a:hover {
 .blog-head--login .blog-btn--login,
 .blog-head--login .blog-btn--register {
   cursor: pointer;
+}
+.blog-head--avatar {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  margin-right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.blog-head--avatar>img {
+  width: 100%;
+  height: 100%;
+}
+.blog-head--avatar:hover .blog-head--write {
+  transform: translateX(0) translateY(0);
+}
+.blog-head--write {
+  position: absolute;
+  transform: translateX(36px);
+  transition: 0.5s;
+  color: #fff;
 }
 .bi-chevron-down {
   margin-left: 24px;
@@ -113,11 +137,10 @@ a:hover {
 .blog-avatar {
   overflow: hidden;
   text-align: center;
-  height: 140px;
 }
 .blog-avatar img {
   width: 140px;
-  height: auto;
+  height: 140px;
   border-radius: 50%;
   user-select: none;
 }
@@ -150,23 +173,25 @@ a:hover {
 .blog-info .blog-info--desc {
   margin-top: 24px;
 }
-.blog-mian--container {
+.blog-main-wrap {
   padding: 8px;
   border-radius: 4px;
   box-shadow: 0 0 2px #212529;
 }
 .blog-content--item {
-  margin-bottom: 8px;
-  padding: 16px 0;
   background-color: #fafafa;
   text-align: center;
   color: #555;
   cursor: pointer;
 }
+.blog-content--item:not(:last-of-type) {
+  margin-bottom: 8px;
+}
 .blog-content--item:hover .blog-item--desc {
   color: #111;
 }
 .blog-item--title {
+  padding-top: 24px;
   font-size: 24px;
 }
 .blog-item--date {
@@ -185,7 +210,7 @@ a:hover {
 .blog-item--tags {
   display: flex;
   justify-content: flex-end;
-  padding: 0 16px;
+  padding: 16px;
 }
 .blog-item--tags .blog-tags--like:hover,
 .blog-item--tags .blog-tags--comment:hover {
@@ -240,4 +265,11 @@ a:hover {
   left: 8px;
   font-size: 14px;
   color: #f00;
+}
+#editor-wrapper {
+  border: 2px solid #333;
+  z-index: 100;
+}
+#editor-container {
+  height: 500px;
 }

@@ -2,7 +2,7 @@
  * @Author: gaiwa gaiwa@163.com
  * @Date: 2023-09-27 16:05:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-06 21:47:24
+ * @LastEditTime: 2023-10-07 16:12:13
  * @FilePath: \express\myBlog\core\userControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,16 +25,19 @@ module.exports = {
     let password = await encrypt(pwd)
     // 查看数据库是否存在同名用户
     let user = await this.getUserInfo(username)
-    // 如果用户不存在
+    // 如果用户不存在,将注册用户信息存入数据库
     if (user?.statusCode === getUserStatusMsg('USER_NOF').statusCode) {
       let userId = await getUsersNum()
       userId = ('000000' + userId).substr(-6)
-      appendUsers({ user_id: userId, user_name: username, password: password })
+      await appendUsers({ user_id: userId, user_name: username, password: password })
       return {
-        ...getUserStatusMsg('USER_ADD')
+        ...getUserStatusMsg('USER_ADD'),
+        data: {
+          user_id: userId, user_name: username
+        }
       }
     }
-    // 
+    // 如果用户存在
     if (user?.statusCode === getUserStatusMsg('USER_FOND').statusCode) {
       return {
         ...getUserStatusMsg('USER_DR')

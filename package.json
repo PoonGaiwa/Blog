@@ -19,6 +19,7 @@
     "validate.js": "^0.13.1"
   },
   "devDependencies": {
+    "@wangeditor/editor": "^5.1.23",
     "axios": "^1.5.1",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.11.1",

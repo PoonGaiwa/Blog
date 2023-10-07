@@ -2,13 +2,14 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-07 15:38:35
+ * @LastEditTime: 2023-10-07 21:00:18
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import modalMap from './modal.config.js'
 import RegExpVerify from './validate.js'
 import Http from '../modules/Http.js'
+import TempCompile from './templateControl.js'
 
 /**
  * 初始化
@@ -16,6 +17,23 @@ import Http from '../modules/Http.js'
  * 行为调用
  *  展示 关闭
  */
+
+const RES_HANDLE = {
+  register() {
+    this.index()
+  },
+  login() {
+    this.index()
+  },
+  index() {
+    console.log('跳转主页');
+    new TempCompile({
+      wrap: '.blog-head--login',
+      name: 'user',
+      data: { isLogin: true }
+    })
+  }
+}
 
 export default class Modal {
   constructor({ hbsTemp, modalWrap = $('.blog-modal'), modalType }) {
@@ -28,7 +46,8 @@ export default class Modal {
   // 初始化
   render() {
     let data = modalMap[this.modalType]
-    this.html = this.hbsTemp(data)
+    console.log(data);
+    this.html = TempCompile.render('modal', data)
     this.draw()
   }
   // 渲染
@@ -44,25 +63,25 @@ export default class Modal {
   }
   // 关闭
   close() {
-    // console.log('close');
     this.reset()
   }
   // 提交
   confirm() {
+    this.cleanErrMsg()
     let form = this.wrap.find('form')
     let submitData = form.serializeArray().reduce((acc, curr, idx) => {
       acc[curr.name] = curr.value
       return acc
     }, {})
     this.verifyForm(submitData)
-    this.cleanErrorMsg()
+    this.cleanInput()
   }
   // reset 重置
   reset() {
     this.wrap.hide()
     this.wrap.attr('hidden', true)
   }
-  cleanErrorMsg() {
+  cleanInput() {
     let inputEle = $('.blog-modal--content').children()
     $.each(inputEle, (idx, ele) => {
       ele.value = ''
@@ -70,11 +89,9 @@ export default class Modal {
   }
   verifyForm(submitData) {
     let result = new RegExpVerify(this.modalType, submitData)
+    // 如果验证通过，将数据发送给后端验证
     if (result.status !== 0) {
       this.userAction(submitData)
-      this.msg = '成功'
-      this.clean()
-      this.reset()
     } else {
       this.errorFocus(result)
       this.setErrMsg()
@@ -87,21 +104,34 @@ export default class Modal {
       $(`#${msg[0]}`).focus()
     }
   }
-  userAction(formData) {
+  async userAction(formData) {
     try {
-      new Http({ type: this.modalType, data: formData, }).send()
+      let result = await new Http({ type: this.modalType, data: formData, }).send()
+      // 登录成功4020 或 注册成功4010
+      console.log(result);
+      if (result.statusCode === '4021' || result.statusCode === '4010') {
+        this.msg = '成功'
+        RES_HANDLE[this.modalType]()
+        this.reset()
+      }
     } catch (error) {
-
+      console.log(error);
     }
   }
   setErrMsg() {
     let verifyEle = $('.blog-modal--content').children('div')
     $.each(verifyEle, (idx, ele) => {
       let inputType = $(ele).data('type')
-      let errorMsg = String(this.msg[`${inputType}`])
+      let errorMsg = String(this.msg?.[`${inputType}`])
       if (errorMsg !== 'undefined') {
         ele.dataset['msg'] = errorMsg
       }
+    })
+  }
+  cleanErrMsg() {
+    let cleanEle = $('.blog-modal--content').children('div')
+    $.each(cleanEle, (idx, ele) => {
+      ele.dataset['msg'] = ''
     })
   }
 }

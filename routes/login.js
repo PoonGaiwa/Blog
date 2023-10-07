@@ -2,16 +2,15 @@
  * @Author: gaiwa gaiwa@163.com
  * @Date: 2023-09-27 21:39:04
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-06 21:33:15
+ * @LastEditTime: 2023-10-07 16:26:10
  * @FilePath: \express\myBlog\routes\login.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 const express = require('express');
-const jwt = require('jsonwebtoken')
 const router = express.Router();
 const userControl = require('../core/userControl');
 const { getUserStatusMsg } = require('../core/statusControl')
-const { getPrivateKey } = require('../core/rsaControl')
+const { sendToken } = require('../core/sendToken')
 
 /* GET users listing. */
 router.post('/', async function (req, res, next) {
@@ -24,13 +23,8 @@ router.post('/', async function (req, res, next) {
   }
 
   // 如果验证成功 签发Token
-  if (result.data) {
-    let { userId, username } = result?.data
-    let token = jwt.sign({
-      user_name: username,
-      user_id: userId,
-      exp: ~~((Date.now() / 1000) + 24 * 3600 * 3)
-    }, await getPrivateKey(), { algorithm: 'RS256' })
+  if (result.statusCode === '4020' && result.data) {
+    let token = await sendToken(result)
     res.send(200, {
       ...getUserStatusMsg('USER_LOGIN'),
       data: {
