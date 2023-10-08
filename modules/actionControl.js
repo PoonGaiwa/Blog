@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-08 00:13:47
+ * @LastEditTime: 2023-10-08 18:10:43
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,21 +20,16 @@
  */
 
 import Modal from './modalControl.js'
-import TempCompile from './templateControl.js'
-const { createEditor, createToolbar } = window.wangEditor
-const editorConfig = {
-  placeholder: 'Type here...',
-  onChange(editor) {
-    const html = editor.getHtml()
-    // console.log('editor content', html)
-    // 也可以同步到 <textarea>
-  }
-}
+import router from '../modules/routerControl.js'
 export default class Action {
   constructor(params) {
+    this.init()
     this.modalAgency()
     this.formAgency()
     this.routerAgency()
+  }
+  init() {
+    router.go('/index', { routerName: 'index', })
   }
   // modal
   modalAgency() {
@@ -53,8 +48,9 @@ export default class Action {
       this.modal.render()
     })
     // 监听modal上的button
-    // 由于插件之间冲突，无法监听表单的submit事件，因此也写在button的点击事件中
+    // 由于插件之间冲突，无法监听表单的submit事件，因此写在button的点击事件中
     $(document).on('click', 'button[data-modal-btn]', (e) => {
+      e.preventDefault()
       let $target = $(e.target)
       let btnType = $target.data('modal-btn')
       if (this.modal) {
@@ -75,26 +71,10 @@ export default class Action {
   }
   // router
   routerAgency() {
-    $(document).on('click', '[data-router]', (e) => {
-      let $target = $(e.target)
+    $(document).on('click', 'a[data-router]', function (e) {
+      let $target = $(this)
       let routerName = $target.data('router')
-      new TempCompile({
-        wrap: '.blog-main-wrap',
-        name: 'write'
-      })
-      // TODO富文本编辑器初始化
-      let editor = createEditor({
-        selector: '#editor-container',
-        // html: '<p><br></p>',
-        config: editorConfig,
-        mode: 'default', // or 'simple'
-      })
-      const toolbar = createToolbar({
-        editor,
-        selector: '#toolbar-container',
-        // config: toolbarConfig,
-        mode: 'default', // or 'simple'
-      })
+      router.go('/write', { routerName: routerName, })
     })
   }
 }

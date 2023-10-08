@@ -1,8 +1,8 @@
 /*
  * @Author: gaiwa gaiwa@163.com
  * @Date: 2023-09-27 15:28:24
- * @LastEditors: gaiwa gaiwa@163.com
- * @LastEditTime: 2023-09-28 17:43:03
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-08 20:03:06
  * @FilePath: \express\myBlog\app.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -39,7 +39,7 @@ app.use(cors({
 }))
 
 
-app.use('/index', indexRouter);
+app.use('/user', indexRouter);
 app.use('/getPublicKey', getPubKeyRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);

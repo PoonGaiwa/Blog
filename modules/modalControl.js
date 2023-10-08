@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-07 21:00:18
+ * @LastEditTime: 2023-10-08 20:17:41
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,7 @@ import modalMap from './modal.config.js'
 import RegExpVerify from './validate.js'
 import Http from '../modules/Http.js'
 import TempCompile from './templateControl.js'
+import router from '../modules/routerControl.js'
 
 /**
  * 初始化
@@ -20,18 +21,13 @@ import TempCompile from './templateControl.js'
 
 const RES_HANDLE = {
   register() {
-    this.index()
+    this.user()
   },
   login() {
-    this.index()
+    this.user()
   },
-  index() {
-    console.log('跳转主页');
-    new TempCompile({
-      wrap: '.blog-head--login',
-      name: 'user',
-      data: { isLogin: true }
-    })
+  user() {
+    router.go('/user')
   }
 }
 
@@ -46,7 +42,6 @@ export default class Modal {
   // 初始化
   render() {
     let data = modalMap[this.modalType]
-    console.log(data);
     this.html = TempCompile.render('modal', data)
     this.draw()
   }
@@ -108,7 +103,6 @@ export default class Modal {
     try {
       let result = await new Http({ type: this.modalType, data: formData, }).send()
       // 登录成功4020 或 注册成功4010
-      console.log(result);
       if (result.statusCode === '4021' || result.statusCode === '4010') {
         this.msg = '成功'
         RES_HANDLE[this.modalType]()

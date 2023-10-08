@@ -32,6 +32,7 @@
     "layui": "^2.8.17",
     "node-rsa": "^1.1.1",
     "normalize.css": "^8.0.1",
+    "sme-router": "^0.12.8",
     "store.js": "^1.0.4"
   }
 }

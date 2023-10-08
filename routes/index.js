@@ -1,3 +1,11 @@
+/*
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-09-27 15:28:24
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-08 20:06:30
+ * @FilePath: \myBlog\routes\index.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const express = require('express');
 const createError = require('http-errors')
 const expressJwt = require('express-jwt');
@@ -18,6 +26,7 @@ router.post('/', expressJwt({
     req.userID = user_id
 
     userControl.verifyTokenInfo(req.username, req.userID).then(result => {
+      console.log(result);
       if (result.statusCode === getUserStatusMsg('USER_FOND').statusCode) {
         next()
         return
