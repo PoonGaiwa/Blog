@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-08 18:10:43
+ * @LastEditTime: 2023-10-09 16:16:05
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,8 +19,9 @@
  *  confirm 提交 校验
  */
 
-import Modal from './modalControl.js'
-import router from '../modules/routerControl.js'
+import Modal from './modalControl'
+import Router from './routerControl'
+
 export default class Action {
   constructor(params) {
     this.init()
@@ -29,7 +30,7 @@ export default class Action {
     this.routerAgency()
   }
   init() {
-    router.go('/index', { routerName: 'index', })
+    Router.go('/index', { routerName: 'index', })
   }
   // modal
   modalAgency() {
@@ -41,10 +42,7 @@ export default class Action {
       if (!modalType) {
         return false
       }
-      this.modal = new Modal({
-        hbsTemp: Handlebars.templates['modal.hbs'],
-        modalType,
-      })
+      this.modal = new Modal({ modalType })
       this.modal.render()
     })
     // 监听modal上的button
@@ -74,7 +72,7 @@ export default class Action {
     $(document).on('click', 'a[data-router]', function (e) {
       let $target = $(this)
       let routerName = $target.data('router')
-      router.go('/write', { routerName: routerName, })
+      Router.go('/write', { routerName: routerName, })
     })
   }
 }

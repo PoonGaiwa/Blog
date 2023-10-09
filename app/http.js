@@ -2,50 +2,20 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 16:02:57
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-08 20:27:36
+ * @LastEditTime: 2023-10-09 19:29:48
  * @FilePath: \express\myBlog\modules\Http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
+import axios from 'axios'
+import JSEncrypt from 'jsencrypt'
+import store from 'store'
 
-
-/**
- * host + port
- * method 分类
- * 地址分类管理
- * 返回内容解构
- * 
- * 
- * 接口地址管理
- * host post
- *  http://127.0.0.1:3000
-  * url
-  *  register /user/register
-  *  login    /user/login
-  *  getRSA   /getPublicRsc
- * 接口参数管理
- *  ajax method 
- *    get post
- * 
- *  request接口参数管理
- *    register username pwd
- *    login username pwd
- * 
- *    register:{
- *      getSms:{
- *        url: '/register/getSms',
- *        data:{
- *          mobile: '手机号',
- *          uuid: 'Uuid'
- *        }
- *      }
- *    }
- * 
- */
 const BASEURL = 'http://127.0.0.1:3000'
 const TIMEOUT = 3000
 const PUBKEYNAME = 'ua_publicKey'
 const TOKENNAME = 'ua_jot'
+
 const REQUEST_MAP = {
   'register': {
     withToken: false,

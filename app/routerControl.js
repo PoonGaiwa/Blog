@@ -1,5 +1,15 @@
-import Http from './Http.js';
-import TempCompile from './templateControl.js'
+/*
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-10-08 15:05:18
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-09 19:43:50
+ * @FilePath: \myBlog_client\app\routerControl.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+import Http from './http';
+import TempCompile from './templateControl'
+import Router from 'sme-router'
+import { createEditor, createToolbar } from '@wangeditor/editor';
 
 const ROUTE_MAP = {
   'write': {
@@ -17,17 +27,12 @@ const ROUTE_MAP = {
 
 function routeHandle(req) {
   let type = req.body.routerName
-  console.log(type);
-  // let type = req.route.replace('/', '')
-  router['_mount'] = document.querySelector('#page')
   if (ROUTE_MAP[type]['wrap']) {
     router['_mount'] = document.querySelector(ROUTE_MAP[type].wrap)
   }
   req.routerName = type
 }
 
-// 路由事件 管理
-const Router = window['sme-router'].default
 // 实例化参数 模板渲染内容的容器的id名称
 const router = new Router('page')
 
@@ -37,7 +42,6 @@ router.route('/write', (req, res, next) => {
   let routerName = req.routerName ?? 'index'
   res.render(TempCompile.render(routerName, {}))
   // TODO富文本编辑器初始化
-  const { createEditor, createToolbar } = window.wangEditor
   const editorConfig = {
     placeholder: 'Type here...',
     onChange(editor) {
@@ -66,7 +70,7 @@ router.route('/index', async (req, res, next) => {
   await new Http({ type: routerName, }).send().then(res => {
     router.go('/user', { routerName: 'user' })
   }).catch(err => {
-    console.log(err);
+    // console.error(err);
     res.render(TempCompile.render(routerName, { isLogin: false }))
   })
 })
@@ -76,7 +80,6 @@ router.route('/user', (req, res, next) => {
 })
 
 router.route('*', (req, res, next) => {
-  console.log(req.routerName);
   if (!req.routerName || req.routerName === 'undefined') {
     res.redirect('/')
   }
