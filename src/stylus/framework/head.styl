@@ -9,37 +9,38 @@
   background-color bg-head-color
   color font-head-color
   user-select none
-  .blog-head--logo
-    img
-      height 36px
-      border-radius 50%
-      width auto
-  .blog-head--nav
-    flex 1
-    justify-content space-between
-    align-items center
-    .blog-nav--item
-      margin 0
-      padding 0
-      &>li:not(first-child)
-        margin-left margin-space * 4
-    a
-      text-decoration none
-      color font-head-color
-      &:hover
-        color font-hover-color
+  a
+    color font-head-color
+    &:hover
+      color darken(font-head-color,15%)
+
+.blog-head--logo
+  img
+    height 36px
+    border-radius 50%
+    width auto
+
+.blog-head--nav
+  flex 1
+  justify-content space-between
+  align-items center
+
+.blog-nav--item
+  &>li:not(first-child)
+    margin-left margin-space * 4
+
 .blog-nav-right
   flex 1
   justify-content right
   align-items center
 
 .blog-head--search
-  box-sizing border-box
   margin-right margin-space * 4
+  
 .input-group
   overflow hidden
   height 36px
-  border 1px solid bg-modifier-color
+  border 1px solid iptBorder-head-color
   border-radius border-radius-default
 
 .blog-input--search
@@ -47,7 +48,8 @@
   height 36px
   border 0
   background-color bg-head-color
-  color bg-modifier-color
+  &:focus
+    outline none
   svg
     color bg-modifier-color
     background-color bg-head-color

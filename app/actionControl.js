@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-09 16:16:05
+ * @LastEditTime: 2023-10-10 14:23:36
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -72,7 +72,7 @@ export default class Action {
     $(document).on('click', 'a[data-router]', function (e) {
       let $target = $(this)
       let routerName = $target.data('router')
-      Router.go('/write', { routerName: routerName, })
+      Router.go(`/${routerName}`, { routerName: routerName, })
     })
   }
 }

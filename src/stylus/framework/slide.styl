@@ -6,7 +6,7 @@
   padding (padding-space * 6) 0
   box-shadow 0 0 2px border-main-color
   border-radius border-radius-default * 1.5
-  background-color bg-article-color
+  background-color bg-main-color
 
 .blog-avatar
   overflow hidden
@@ -21,22 +21,24 @@
   display flex
   flex-direction column
   align-items center
-  .blog-info--nickname
-    padding padding-space * 2 0
-  .blog-info--state
-    display flex
-    justify-content center
-    user-select none
-    span
-      display block
-      text-align center
-      cursor pointer
-    a
-      &:hover
-        color font-article-color
-      &:not(:nth-of-type(1))
-        margin-left margin-space
-        padding-left padding-space
-        border-left 1px solid font-common-color
-  .blog-info--desc
-    margin-top margin-space * 3
+
+.blog-info--nickname
+  padding padding-space * 2 0
+.blog-info--state
+  display flex
+  justify-content center
+  user-select none
+  span
+    display block
+    text-align center
+    cursor pointer
+  a
+    &:hover
+      color theme-color
+    &:not(:nth-of-type(1))
+      margin-left margin-space
+      padding-left padding-space
+      border-left 1px solid font-common-color
+
+.blog-info--desc
+  margin-top margin-space * 3

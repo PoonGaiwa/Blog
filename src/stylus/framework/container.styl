@@ -1,18 +1,20 @@
 .blog-main-wrap
   padding padding-space
+  height 80vh
+  overflow-y: auto
   border-radius border-radius-default * .5
   box-shadow 0 0 2px border-main-color
   
 .blog-content--item
-  background-color bg-article-color
+  background-color bg-main-color
   text-align center
-  color font-article-color
+  color font-main-color
   cursor pointer
   &:not(:last-of-type)
     margin-bottom margin-space
   &:hover
     .blog-item--desc
-      color darken(font-article-color,80%)
+      color darken(font-main-color,80%)
 
 .blog-item--title
   padding-top padding-space * 3
@@ -20,6 +22,7 @@
 
 .blog-item--date
   font-size font-size-p
+  padding-bottom padding-space
 
 .blog-item--illustration
   height 220px
@@ -38,4 +41,4 @@
   .blog-tags--like,
   .blog-tags--comment
     &:hover
-      color darken(font-article-color,80%)
+      color darken(font-main-color,80%)

@@ -14,9 +14,9 @@
   align-self center
   width 50%
   padding padding-space * 2
-  box-shadow 0 0 4px border-main-color inset
+  box-shadow 0 0 4px border-modal-color inset
   border-radius border-radius-default
-  background-color bg-article-color
+  background-color bg-modal-color
 
 .blog-modal--head
   display flex
@@ -25,14 +25,18 @@
   padding padding-space
 
 .blog-modal--title
+  color font-common-color
   font-size font-size-h * 2
 
 .blog-modal--close
   font-size font-size-h
 
+.col-form-label
+  color font-modal-color
+
 .blog-footer--confirm
-  border 1px solid lighten(border-main-color,60%)
-  color font-article-color
+  border 1px solid lighten(border-modal-color, 60%)
+  color font-modal-color
 
 .blog-content--username,
 .blog-content--pwd

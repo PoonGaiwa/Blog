@@ -3,14 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "compile-styl": "stylus -w ./stylus -o ./public/stylesheets",
-    "compile-hbs": "node ./script/execHbs.js",
+    "compile-styl": "stylus -w ./src/stylus -o ./public/stylesheets",
     "build": "npx webpack --config ./config/webpack.prod.js",
     "dev": "npx webpack --config ./config/webpack.dev.js",
     "start": "webpack serve --config ./config/webpack.dev.js"
   },
   "devDependencies": {
-    "@wangeditor/editor": "^5.1.23",
     "axios": "^1.5.1",
     "clean-webpack-plugin": "^4.0.0",
     "colors.css": "^3.0.0",
@@ -26,8 +24,12 @@
     "store.js": "^1.0.4",
     "style-loader": "^3.3.3",
     "stylus-loader": "^7.1.3",
+    "terser-webpack-plugin": "^5.3.9",
+    "typo.css": "^2.1.2",
     "validate.js": "^0.13.1",
+    "wangeditor": "^4.7.15",
     "webpack": "^5.88.2",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   }

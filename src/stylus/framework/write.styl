@@ -1,8 +1,22 @@
 #editor-wrapper 
   border: 2px solid #333;
   z-index: 100
+#editor-container
+  h1,h2,h3,h4,h5,h6
+    font-weight 700
 
-#toolbar-container 
-  // border-bottom: 1px solid #ccc; 
-#editor-container 
-  height: 500px; 
+.blog-write--control
+  display flex
+  justify-content flex-end
+  align-content center
+  padding padding-space
+  border-top 1px solid #ccc
+  & a
+    padding padding-space * .5 padding-space *2
+    border 1px solid #ccc
+    border-radius 4px
+    box-shadow 0 0 1px #333
+    &:not(first-child)
+      margin-left margin-space * 2
+    &:hover
+      color lighten(font-common-color, 40%)

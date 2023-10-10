@@ -2,13 +2,14 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-09 14:33:01
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-09 17:40:14
+ * @LastEditTime: 2023-10-09 21:02:09
  * @FilePath: \myBlog_client\config\webpack.common.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 module.exports = {
   entry: {       // 指定入口
     main: './app/main.js',
@@ -16,9 +17,11 @@ module.exports = {
   //指定出口
   output: {
     filename: '[name].build.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, '../dist')
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: "html plugn page",        // 设置生成html的title
       template: './index.html'         // 已现有的html文件作为模板基础，将其他元素插入该模板
