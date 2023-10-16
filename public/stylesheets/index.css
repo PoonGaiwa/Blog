@@ -8,6 +8,9 @@
 .flex-column {
   flex-direction: column;
 }
+.alert {
+  margin-bottom: 0;
+}
 .blog-head {
   width: 100%;
   height: 70px;
@@ -146,9 +149,9 @@
   margin-top: 24px;
 }
 .blog-main-wrap {
+  overflow: hidden;
   padding: 8px;
   height: 80vh;
-  overflow-y: auto;
   border-radius: 4px;
   box-shadow: 0 0 2px #5e767c;
 }
@@ -232,12 +235,14 @@
   color: #555;
 }
 .blog-content--username,
-.blog-content--pwd {
+.blog-content--email,
+.blog-content--password {
   position: relative;
   padding-bottom: 24px;
 }
 .blog-content--username::after,
-.blog-content--pwd::after {
+.blog-content--email::after,
+.blog-content--password::after {
   content: attr(data-msg);
   position: absolute;
   top: 78px;
@@ -287,4 +292,14 @@
 .blog-artical h5,
 .blog-artical h6 {
   font-weight: 700;
+}
+.blog-message {
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  bottom: 0;
+}
+.blog-message .alert.show {
+  bottom: 0;
+  opacity: 1;
 }

@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 16:02:57
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-09 19:29:48
+ * @LastEditTime: 2023-10-16 19:57:38
  * @FilePath: \express\myBlog\modules\Http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,7 @@
 import axios from 'axios'
 import JSEncrypt from 'jsencrypt'
 import store from 'store'
+import Message from './message'
 
 const BASEURL = 'http://127.0.0.1:3000'
 const TIMEOUT = 3000
@@ -19,25 +20,30 @@ const TOKENNAME = 'ua_jot'
 const REQUEST_MAP = {
   'register': {
     withToken: false,
-    url: '/register',
+    url: '/admin/register',
     method: 'POST',
-    rsaKey: 'pwd'
+    rsaKey: 'password'
   },
   'login': {
     withToken: false,
-    url: '/login',
+    url: '/admin/login',
     method: 'POST',
-    rsaKey: 'pwd'
-  },
-  'user': {
-    withToken: true,
-    url: '/user',
-    method: 'POST'
+    rsaKey: 'password'
   },
   'pubKey': {
     withToken: false,
-    url: '/getPublicKey',
+    url: '/key',
     method: 'GET'
+  },
+  'articles': {
+    withToken: false,
+    url: '/api/rest/articles',
+    method: "GET"
+  },
+  'columns': {
+    withToken: false,
+    url: '/api/rest/columns',
+    method: "GET"
   }
 }
 
@@ -68,21 +74,23 @@ export default class Http {
     try {
       let result = await this.request[method?.toLowerCase()](url, data)
       return result
-    } catch (error) {
-      return Promise.reject(error)
+    } catch (err) {
+      return Promise.reject(err)
     }
   }
   interceptors() {
     let rsaKey = this.rsaKey
     // 请求拦截
     this.request.interceptors.request.use(async (config) => {
-      let data = config.data
-      // 如果存在需要加密的data键
-      if (rsaKey in data) {
-        // 加密处理
-        data[rsaKey] = await this.wordEcrypt(data[rsaKey])
+      let data = config?.data
+      if (data) {
+        // 如果存在需要加密的data键
+        if (rsaKey in data) {
+          // 加密处理
+          data[rsaKey] = await this.wordEcrypt(data[rsaKey])
+        }
+        data = JSON.stringify(data)
       }
-      data = JSON.stringify(data)
       return config
     }, (err) => {
       return Promise.reject(err)
@@ -91,10 +99,6 @@ export default class Http {
     this.request.interceptors.response.use((response) => {
       let result = response.data
       // 判断任务状态码是否为正常 正常为200 自定义的用户注册成功状态码为4010
-      if ((result.statusCode !== '4010') && (result.statusCode !== '4021')) {
-        console.warn('请求错误', result.errMsg)
-        return result
-      }
       if (this.type === 'login' || this.type === 'register') {
         let token = result.data.token
         // 本地存储token
@@ -102,7 +106,11 @@ export default class Http {
       }
       return result
     }, (err) => {
-      return Promise.reject(err)
+      // 响应status不是200 获取data.message展示给用户
+      console.log(err.response);
+      let message = err.response.data.message
+      new Message(message).danger()
+      return err.response.data
     })
   }
   async wordEcrypt(plain) {
@@ -117,18 +125,19 @@ export default class Http {
   async getPublicKey() {
     // 本地获取pubkey
     let key
+    let { method, url } = REQUEST_MAP['pubKey']
     try {
-      let result = await axios.get('/getPublicKey')
+      let result = await axios[method.toLowerCase()](url)
       result = result.data
-      if (result.statusCode === 200) {
-        key = result.data.pubKey
-        key = key.replace(/\. +/g, '')
-        key = key.replace(/[\r\n]/g, '')
-        this.pubKey = key
-        store.set(PUBKEYNAME, key)
-      }
+      key = result.data.pubKey
+      key = key.replace(/\. +/g, '')
+      key = key.replace(/[\r\n]/g, '')
+      this.pubKey = key
+      console.log(key);
+      store.set(PUBKEYNAME, key)
     } catch (error) {
-      console.log(error);
+      let message = error.response.data.message
+      new Message(message).danger()
     }
     return key
   }
