@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-17 15:27:58
+ * @LastEditTime: 2023-10-17 21:02:24
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,20 +19,27 @@ import TempCompile from './templateControl'
 import Router from 'sme-router'
 import Editor from 'wangeditor';
 import util from './util/util';
-import scroll from './scroll'
+import iScroll from 'iscroll'
 
-// import { createEditor, createToolbar } from '@wangeditor/editor';
+let scroll = new iScroll('.blog-main-wrap', {
+  mouseWheel: true,
+})
+function isScroll() {
+  event.stopPropagation();
+  event.preventDefault()
+}
+let oCon = document.querySelector('.blog-main-wrap')
+oCon.addEventListener('touchmove', isScroll)
+
 const ROUTE_MAP = {
   'write': {
     wrap: '.blog-main-scroll',
     editor: '#editor-container',
     toolbar: '#toolbar-container'
   },
-  'user': {
-    wrap: '.blog-head--login'
-  },
   'index': {
-    wrap: '.blog-head--login'
+    wrap: '.blog-head--login',
+    tempName: 'user'
   },
   'write/submit': {
     wrap: '.blog-main-scroll',
@@ -67,18 +74,19 @@ function renderHandle(routeName, data) {
 const router = new Router('page')
 let editor, html
 
-router.use((req) => {
-  let type = req.body.routeName
-  req.routeName = type
-})
-// 过滤无routerName 重定向到初始目录
+
+// 过滤无routeName 重定向到初始目录
 router.route('/write', (req, res, next) => {
-  let routeName = req.routeName ?? 'index'
+  let routeName = req.body.routeName ?? 'index'
   // 执行二级路由时，一级路由也会拦截
-  if (routeName = 'write') {
+  if (routeName === 'write') {
+    scroll.refresh()
+    scroll.destroy()
+    scroll = null
+    oCon.removeEventListener('touchmove', isScroll)
     res.render(renderHandle(routeName, {}))
+    console.log(scroll);
     editor = new Editor(ROUTE_MAP[routeName].editor)
-    editor.config.height = 850
     editor.config.onblur = function (newHtml) {
       html = newHtml // 获取最新的 html 内容
     }
@@ -87,11 +95,10 @@ router.route('/write', (req, res, next) => {
 })
 
 router.route('/write/:active', async (req, res, next) => {
-  let routeName = req.body.routerName
+  let routeName = req.body.routeName
   if (editor) {
     let content = html
     let title = $(content).first().text()
-    console.log($(content).first().text());
     try {
       let result = await new Http({ type: 'postArticle', data: { title, content } }).send()
       result = result.data.data
@@ -103,15 +110,32 @@ router.route('/write/:active', async (req, res, next) => {
 })
 
 router.route('/index', async (req, res, next) => {
-  let routeName = 'user'
-  router.go('/user', { routeName: 'user' })
-  // 根据token情况自动帮用户登录
+  let routeName = req.body.routeName
+  scroll = new iScroll('.blog-main-wrap', {
+    mouseWheel: true,
+  })
+  let result = await new Http({ type: routeName }).send()
+  if (result.status == '200') {
+    res.render(renderHandle(routeName, { isLogin: true }))
+    scroll.refresh()
+  } else {
+    res.render(renderHandle(routeName, { isLogin: false }))
+    scroll.refresh()
+  }
   try {
-    routeName = "articles"
+    routeName = 'articles'
     let result = await new Http({ type: routeName }).send()
+    result = result.data.data
+    result.list = result.list.map(item => {
+      item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
+      item.content = `${$(item.content).text().slice(0, 120)}...`
+      return item
+    })
     res.render(renderHandle(routeName, result))
+    // 刷新scroll重新根据当前滚动内容适配滚动
+    scroll.refresh()
   } catch (error) {
-
+    console.log(error);
   }
 })
 
@@ -126,31 +150,17 @@ router.route('/article', async (req, res, next) => {
     res.render(renderHandle(routeName, result))
     scroll.refresh()
   } catch (err) {
-
+    console.log(err);
   }
 })
 
-router.route('/user', async (req, res, next) => {
-  let routeName = req.routeName
-  res.render(renderHandle(routeName, { isLogin: true }))
-  try {
-    routeName = 'articles'
-    let result = await new Http({ type: routeName }).send()
-    result = result.data.data
-    result.list = result.list.map(item => {
-      item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
-      item.content = `${$(item.content).text().slice(0, 120)}...`
-      return item
-    })
-    res.render(renderHandle(routeName, result))
-    scroll.refresh()
-  } catch (error) {
-  }
+router.route('/', (req, res, next) => {
+
 })
 
 router.route('*', (req, res, next) => {
   if (!req.routeName || req.routeName === 'undefined') {
-    res.redirect('/')
+    router.go('/index', { routeName: 'index' })
   }
 })
 

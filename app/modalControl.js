@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-16 21:38:55
+ * @LastEditTime: 2023-10-17 19:07:28
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,13 +21,14 @@ import Router from './routerControl'
 
 const RES_HANDLE = {
   register() {
-    this.user()
+    this.index()
   },
   login() {
-    this.user()
+    this.index()
   },
-  user() {
-    Router.go('/user', { routerName: 'user', })
+  index() {
+    Router.go('/')
+    Router.go('/index', { routeName: 'index', isLogin: true })
   }
 }
 
@@ -85,7 +86,6 @@ export default class Modal {
     console.log(submitData);
     let result = new RegExpVerify(this.modalType, submitData)
     // 如果验证通过，将数据发送给后端验证
-    console.log(result);
     if (result.status !== 0) {
       this.userAction(submitData)
     } else {
@@ -103,7 +103,6 @@ export default class Modal {
   async userAction(formData) {
     try {
       let result = await new Http({ type: this.modalType, data: formData }).send()
-      console.log(result);
       // 登录成功200
       if (result.status == '200') {
         this.msg = '成功'

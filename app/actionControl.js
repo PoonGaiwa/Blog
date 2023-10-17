@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-17 11:42:39
+ * @LastEditTime: 2023-10-17 18:57:47
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,7 +20,7 @@
  */
 
 import Modal from './modalControl'
-import Router from './routerControl'
+import router from './routerControl'
 import iScroll from 'iscroll'
 
 export default class Action {
@@ -31,15 +31,7 @@ export default class Action {
     this.routerAgency()
   }
   init() {
-    Router.go('/index', { routerName: 'index', })
-    // 获取文章列表
-    // document.addEventListener('touchmove', (e) => {
-    //   e.preventDefault()
-    // })
-    // // 初始化IScroll
-    // new iScroll('.blog-main-wrap', {
-    //   mouseWheel: true,
-    // })
+    // router.go('/index', { routeName: 'index', })
   }
   // modal
   modalAgency() {
@@ -80,9 +72,9 @@ export default class Action {
   routerAgency() {
     $(document).on('click', 'a[data-router]', function (e) {
       let $target = $(this)
-      let routerName = $target.data('router')
+      let routeName = $target.data('router')
       let id = $target.data('id')
-      Router.go(`/${routerName}`, { routerName: routerName, id: id })
+      router.go(`/${routeName}`, { routeName: routeName, id: id })
     })
   }
 }

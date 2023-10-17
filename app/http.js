@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 16:02:57
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-17 14:29:24
+ * @LastEditTime: 2023-10-17 18:43:16
  * @FilePath: \express\myBlog\modules\Http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -23,6 +23,12 @@ const REQUEST_MAP = {
     url: '/admin/register',
     method: 'POST',
     rsaKey: 'password'
+  },
+  'index': {
+    withToken: true,
+    url: '/index',
+    method: 'GET',
+    noMessage: true
   },
   'login': {
     withToken: false,
@@ -60,7 +66,7 @@ const REQUEST_MAP = {
 }
 
 export default class Http {
-  constructor({ type = REQUEST_MAP.user['url'], data = {} } = {}) {
+  constructor({ type = REQUEST_MAP.index['url'], data = {} } = {}) {
     this.type = type
     this.data = data
     this.default()
@@ -83,6 +89,7 @@ export default class Http {
   }
   async send() {
     let { url, method, data } = this
+    console.log(url, method, data);
     try {
       let result = await this.request[method?.toLowerCase()](url, data)
       return result
@@ -125,9 +132,10 @@ export default class Http {
       return response
     }, (err) => {
       // 响应status不是200 获取data.message展示给用户
-      console.log(err);
-      let message = err.response.data.message
-      new Message(message).danger()
+      if (!this.noMessage) {
+        let message = err.response.data.message
+        new Message(message).danger()
+      }
       return err.response
     })
   }
