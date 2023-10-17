@@ -1,4 +1,5 @@
 .blog-main-wrap
+  position relative
   overflow hidden
   padding padding-space
   height 80vh
@@ -6,23 +7,33 @@
   box-shadow 0 0 2px border-main-color
   
 .blog-content--item
-  background-color bg-main-color
   text-align center
   color font-main-color
-  cursor pointer
   &:not(:last-of-type)
     margin-bottom margin-space
+
+.blog-content-link
+  display block
+  background-color bg-main-color
+  border-radius border-radius-default * .5
+  transition .3s
   &:hover
-    .blog-item--desc
-      color darken(font-main-color,80%)
+    box-shadow 0 0 3px theme-color inset
 
 .blog-item--title
   padding-top padding-space * 3
   font-size font-size-h * 1.5
 
-.blog-item--date
+.blog-item--info
+  display flex
+  justify-content center
+  align-items center
+  height 40px
   font-size font-size-p
-  padding-bottom padding-space
+  padding-bottom padding-space * 2
+  p
+    &:not(:last-of-type)
+      padding-right padding-space
 
 .blog-item--illustration
   height 220px
@@ -38,7 +49,10 @@
   display flex
   justify-content flex-end
   padding padding-space * 2
-  .blog-tags--like,
-  .blog-tags--comment
-    &:hover
-      color darken(font-main-color,80%)
+
+.blog-tags--like
+  padding-right padding-space
+.blog-tags--like,
+.blog-tags--comment
+  &:hover
+    color theme-color

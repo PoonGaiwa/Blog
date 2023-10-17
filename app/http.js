@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 16:02:57
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-16 19:57:38
+ * @LastEditTime: 2023-10-17 14:29:24
  * @FilePath: \express\myBlog\modules\Http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -40,10 +40,22 @@ const REQUEST_MAP = {
     url: '/api/rest/articles',
     method: "GET"
   },
+  'postArticle': {
+    withToken: false,
+    url: '/api/rest/articles',
+    method: 'POST'
+  }
+  ,
   'columns': {
     withToken: false,
     url: '/api/rest/columns',
     method: "GET"
+  },
+  'getArticleById': {
+    withToken: false,
+    rest: true,
+    url: '/api/rest/articles/:id',
+    method: 'GET'
   }
 }
 
@@ -83,6 +95,11 @@ export default class Http {
     // 请求拦截
     this.request.interceptors.request.use(async (config) => {
       let data = config?.data
+      if (this.rest) {
+        let restSymbol = this.url.match(/:(.*)$/)[1]
+        config.url = config.url.replace(/:(.*)$/, config[restSymbol]);
+        console.log(config.url);
+      }
       if (data) {
         // 如果存在需要加密的data键
         if (rsaKey in data) {
@@ -104,13 +121,14 @@ export default class Http {
         // 本地存储token
         store.set(TOKENNAME, token);
       }
-      return result
+      console.log(response);
+      return response
     }, (err) => {
       // 响应status不是200 获取data.message展示给用户
-      console.log(err.response);
+      console.log(err);
       let message = err.response.data.message
       new Message(message).danger()
-      return err.response.data
+      return err.response
     })
   }
   async wordEcrypt(plain) {

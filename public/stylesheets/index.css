@@ -11,6 +11,9 @@
 .alert {
   margin-bottom: 0;
 }
+a:hover {
+  color: #333;
+}
 .blog-head {
   width: 100%;
   height: 70px;
@@ -149,6 +152,7 @@
   margin-top: 24px;
 }
 .blog-main-wrap {
+  position: relative;
   overflow: hidden;
   padding: 8px;
   height: 80vh;
@@ -156,24 +160,35 @@
   box-shadow: 0 0 2px #5e767c;
 }
 .blog-content--item {
-  background-color: #fafafa;
   text-align: center;
   color: #555;
-  cursor: pointer;
 }
 .blog-content--item:not(:last-of-type) {
   margin-bottom: 8px;
 }
-.blog-content--item:hover .blog-item--desc {
-  color: #111;
+.blog-content-link {
+  display: block;
+  background-color: #fafafa;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+.blog-content-link:hover {
+  box-shadow: 0 0 3px #8fa399 inset;
 }
 .blog-item--title {
   padding-top: 24px;
   font-size: 24px;
 }
-.blog-item--date {
+.blog-item--info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
   font-size: 12px;
-  padding-bottom: 8px;
+  padding-bottom: 16px;
+}
+.blog-item--info p:not(:last-of-type) {
+  padding-right: 8px;
 }
 .blog-item--illustration {
   height: 220px;
@@ -190,9 +205,12 @@
   justify-content: flex-end;
   padding: 16px;
 }
-.blog-item--tags .blog-tags--like:hover,
-.blog-item--tags .blog-tags--comment:hover {
-  color: #111;
+.blog-tags--like {
+  padding-right: 8px;
+}
+.blog-tags--like:hover,
+.blog-tags--comment:hover {
+  color: #8fa399;
 }
 .blog-modal {
   display: grid;
@@ -281,17 +299,36 @@
 .blog-write--control a:hover {
   color: #858585;
 }
-.blog-artical {
+.blog-article {
   min-height: 500px;
-  padding: 16px;
+  padding: 0 16px;
 }
-.blog-artical h1,
-.blog-artical h2,
-.blog-artical h3,
-.blog-artical h4,
-.blog-artical h5,
-.blog-artical h6 {
+.blog-article h1,
+.blog-article h2,
+.blog-article h3,
+.blog-article h4,
+.blog-article h5,
+.blog-article h6 {
+  margin: 0;
+  padding: 0;
   font-weight: 700;
+}
+.blog-article--info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #8fa399;
+}
+.blog-info--basic {
+  text-align: center;
+}
+.blog-info--basic span:not(:last-of-type) {
+  padding-right: 8px;
+}
+.blog-article--tags span:not(:last-of-type) {
+  padding-right: 8px;
 }
 .blog-message {
   position: fixed;

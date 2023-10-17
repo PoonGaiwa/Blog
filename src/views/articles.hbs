@@ -1,0 +1,18 @@
+{{#each list}}
+<article class="blog-content--item">
+  <a class="blog-content-link" href="javascript:;" data-router="article" data-id="{{_id}}">
+    <h3 class="blog-item--title">{{title}}</h3>
+    <div class="blog-item--info">
+      <p class="blog-item--author">{{author.nickname}}</p>
+      <p class="blog-item--date">{{date}}</p>
+    </div>
+    <img class="blog-item--illustration" src="{{cover}}" alt="!">
+    <p class="blog-item--desc">{{{content}}}</p>
+    <div class="blog-item--tags">
+      <span class="blog-tags--like">浏览({{hits_num}})</span>
+      <span class="blog-tags--like">点赞({{like_num}})</span>
+      <span class="blog-tags--comment">评论({{comment_num}})</span>
+    </div>
+  </a>
+</article>
+{{/each}}
