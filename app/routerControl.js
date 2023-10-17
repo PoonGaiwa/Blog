@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-17 21:02:24
+ * @LastEditTime: 2023-10-18 01:59:05
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -17,9 +17,9 @@
 import Http from './http';
 import TempCompile from './templateControl'
 import Router from 'sme-router'
-import Editor from 'wangeditor';
 import util from './util/util';
 import iScroll from 'iscroll'
+import Edite from './editor';
 
 let scroll = new iScroll('.blog-main-wrap', {
   mouseWheel: true,
@@ -28,8 +28,9 @@ function isScroll() {
   event.stopPropagation();
   event.preventDefault()
 }
-let oCon = document.querySelector('.blog-main-wrap')
-oCon.addEventListener('touchmove', isScroll)
+
+let oCon = $('.blog-main-wrap')
+oCon.on('touchmove', isScroll)
 
 const ROUTE_MAP = {
   'write': {
@@ -70,49 +71,22 @@ function renderHandle(routeName, data) {
   return TempCompile.render(tempName, data)
 }
 
+
 // 实例化参数 模板渲染内容的容器的id名称
 const router = new Router('page')
-let editor, html
+let editor, title
 
 
-// 过滤无routeName 重定向到初始目录
-router.route('/write', (req, res, next) => {
-  let routeName = req.body.routeName ?? 'index'
-  // 执行二级路由时，一级路由也会拦截
-  if (routeName === 'write') {
-    scroll.refresh()
-    scroll.destroy()
-    scroll = null
-    oCon.removeEventListener('touchmove', isScroll)
-    res.render(renderHandle(routeName, {}))
-    console.log(scroll);
-    editor = new Editor(ROUTE_MAP[routeName].editor)
-    editor.config.onblur = function (newHtml) {
-      html = newHtml // 获取最新的 html 内容
-    }
-    editor.create()
-  }
-})
 
-router.route('/write/:active', async (req, res, next) => {
-  let routeName = req.body.routeName
-  if (editor) {
-    let content = html
-    let title = $(content).first().text()
-    try {
-      let result = await new Http({ type: 'postArticle', data: { title, content } }).send()
-      result = result.data.data
-      router.go('/article', { routeName: 'article', id: result.id })
-    } catch (err) {
-      console.log(err);
-    }
-  }
-})
 
 router.route('/index', async (req, res, next) => {
   let routeName = req.body.routeName
   scroll = new iScroll('.blog-main-wrap', {
     mouseWheel: true,
+  })
+  oCon.css({
+    'overflow': 'hidden',
+    'height': '80vh'
   })
   let result = await new Http({ type: routeName }).send()
   if (result.status == '200') {
@@ -143,6 +117,13 @@ router.route('/article', async (req, res, next) => {
   let routeName = 'article'
   // 获取需要渲染的文章
   try {
+    oCon.off('touchmove', isScroll)
+    oCon.css({
+      'overflow': '',
+      'height': '100%'
+    })
+    scroll.destroy()
+    scroll = null
     let id = req.body.id;
     let result = await new Http({ type: 'getArticleById', data: { id } }).send()
     result = result.data.data
@@ -151,6 +132,42 @@ router.route('/article', async (req, res, next) => {
     scroll.refresh()
   } catch (err) {
     console.log(err);
+  }
+})
+
+// 过滤无routeName 重定向到初始目录
+router.route('/write', (req, res, next) => {
+  let routeName = req.body.routeName ?? 'index'
+  // 执行二级路由时，一级路由也会拦截
+  if (routeName === 'write') {
+    $('.blog-main-wrap').off('touchmove', isScroll)
+    scroll.destroy()
+    scroll = null
+    oCon.css({
+      'overflow': 'hidden',
+      'height': '80vh',
+      'transform': 'translate(0px, 0px) translateZ(0px)'
+    })
+    res.render(renderHandle(routeName, {}))
+    editor = new Edite(ROUTE_MAP[routeName].editor)
+    let oInput = document.querySelector('.blog-input--write')
+    oInput.addEventListener('keyup', function (e) {
+      title = $(e.target).val()
+    })
+  }
+})
+
+router.route('/write/:active', async (req, res, next) => {
+  let routeName = req.body.routeName
+  if (editor) {
+    let content = editor.html
+    try {
+      let result = await new Http({ type: 'postArticle', data: { title, content } }).send()
+      result = result.data.data
+      router.go('/article', { routeName: 'article', id: result.id })
+    } catch (err) {
+      console.log(err);
+    }
   }
 })
 

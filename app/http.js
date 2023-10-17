@@ -62,6 +62,11 @@ const REQUEST_MAP = {
     rest: true,
     url: '/api/rest/articles/:id',
     method: 'GET'
+  },
+  'uploadArticle': {
+    withToken: true,
+    url: '/upload/article',
+    method: 'POST'
   }
 }
 
