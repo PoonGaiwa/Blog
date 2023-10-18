@@ -153,7 +153,9 @@ a:hover {
 }
 .blog-main-wrap {
   position: relative;
+  overflow: hidden;
   padding: 8px;
+  height: 80vh;
   border-radius: 4px;
   box-shadow: 0 0 2px #5e767c;
 }
@@ -323,7 +325,7 @@ a:hover {
 }
 .blog-article {
   padding: 0 16px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 .blog-article h1,
 .blog-article h2,
@@ -336,21 +338,28 @@ a:hover {
   font-weight: 700;
 }
 .blog-article--info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: column;
   padding-bottom: 8px;
   margin-bottom: 16px;
   border-bottom: 2px solid #8fa399;
 }
+.blog-article--info:not(:last-of-type) {
+  margin-bottom: 8px;
+}
 .blog-info--basic {
-  text-align: center;
+  text-align: left;
 }
 .blog-info--basic span:not(:last-of-type) {
   padding-right: 8px;
 }
+.blog-article--tags {
+  text-align: right;
+}
 .blog-article--tags span:not(:last-of-type) {
   padding-right: 8px;
+}
+.blog-article--footer {
+  height: 21vh;
 }
 .blog-message {
   position: fixed;

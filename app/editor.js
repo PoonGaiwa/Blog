@@ -1,3 +1,11 @@
+/*
+ * @Author: Gaiwa 13012265332@163.com
+ * @Date: 2023-10-17 23:02:50
+ * @LastEditors: Gaiwa 13012265332@163.com
+ * @LastEditTime: 2023-10-18 11:15:40
+ * @FilePath: \myBlog_client\app\editor.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import Editor from 'wangeditor';
 import store from 'store'
 import Http from './http';
@@ -25,22 +33,11 @@ export default class Edite {
     this.editor.config.uploadImgServer = URL
     this.editor.config.uploadImgMaxsize = 5 * 1024 * 1024
     this.editor.config.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
-    this.editor.config.uploadImgMaxLength = 1
+    this.editor.config.uploadImgMaxLength = 5
+    this.editor.config.uploadFileName = 'file'
     this.editor.config.uploadImgHeaders = {
       "Authorization": `Bearer ${store.get(TOKENNAME)}`
     }
-    this.editor.config.uploadFileName = 'file'
-    // TO DO 多图片上传
-    // this.editor.config.customUploadImg = async function (resultFiles, insertImgFn) {
-    //   let formData = new FormData()
-    //   formData.append('files', resultFiles)
-    //   try {
-    //     let result = await new Http({ type: 'uploadArticle' }, formData).send()
-    //     console.log(result);
-    //   } catch (err) {
-
-    //   }
-    // }
   }
   create() {
     this.editor.create()

@@ -21,7 +21,6 @@
 
 import Modal from './modalControl'
 import router from './routerControl'
-import iScroll from 'iscroll'
 
 export default class Action {
   constructor(params) {

@@ -1,26 +1,30 @@
 .blog-article
   padding 0 padding-space * 2
-  margin-bottom margin-space
+  margin-bottom margin-space * 2
   h1,h2,h3,h4,h5,h6
     margin 0
     padding 0
     font-weight 700
 
 .blog-article--info
-  display flex
-  justify-content space-between
-  align-items center
+  display column
   padding-bottom padding-space
   margin-bottom margin-space * 2
   border-bottom 2px solid theme-color
 
+  &:not(:last-of-type)
+    margin-bottom margin-space
 .blog-info--basic
-  text-align center
+  text-align left
   span
     &:not(:last-of-type)
       padding-right padding-space
 
 .blog-article--tags
+  text-align right
   span
     &:not(:last-of-type)
       padding-right padding-space
+
+.blog-article--footer
+  height 21vh

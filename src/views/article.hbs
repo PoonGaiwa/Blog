@@ -1,15 +1,15 @@
 <article class="blog-article typo" id="router-view">
   <h1 class="blog-article--title">{{title}}</h1>
-  <div class="blog-article--info">
-    <div class="blog-info--basic">
+  <div class="blog-article--info row">
+    <div class="blog-info--basic col-lg-6 col-md-6">
       <span class="blog-article--author">{{author.nickname}}</span>
       <span class="blog-article--date">{{date}}</span>
     </div>
-    <div class="blog-article--tags">
+    <div class="blog-article--tags d-none d-lg-block col-lg-6 col-md-6">
       <span class="blog-article--like">浏览({{hits_num}})</span>
       <span class="blog-article--like">点赞({{like_num}})</span>
       <span class="blog-article--comment">评论({{comment_num}})</span>
     </div>
   </div>
-  <p class="blog-article--desc">{{{content}}}</p>
+  <div class="blog-article--content">{{{content}}}</div>
 </article>
