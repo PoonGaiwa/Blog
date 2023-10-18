@@ -27,18 +27,51 @@
 .placeholder
   color font-writeplaceh-color !important
 
+.blog-write--footer
+  margin-top margin-space * 2
+
+.blog-write--classify
+  display flex
+  align-items center
+  margin-top margin-space * 2
+  h3
+    font-size font-size-h
+    line-height font-size-h
+    margin-right margin-space * 2
+
+.blog-write--select
+  display flex
+  align-items center
+  flex 1
+  flex-wrap wrap
+  li
+    margin margin-space 0
+    padding 0 padding-space 
+    border 1px solid theme-color
+    border-radius border-radius-default * 2
+    cursor pointer
+    user-select none
+    font-size 14px
+    transition .3s
+    &:not(:last-of-type)
+      margin-right margin-space
+    &.selected
+      background-color theme-color
+      color font-head-color
+    &:hover
+      background-color theme-color
+      color font-head-color
+
 .blog-write--control
   display flex
   justify-content flex-end
   align-content center
   padding padding-space
-  border-top 1px solid #ccc
-  & a
-    padding padding-space * .5 padding-space *2
+
+.blog-submit--article
+  padding padding-space * .5 padding-space *2
+  &:hover
     border 1px solid #ccc
-    border-radius 4px
-    box-shadow 0 0 1px #333
-    &:not(first-child)
-      margin-left margin-space * 2
-    &:hover
-      color lighten(font-common-color, 40%)
+    border-radius border-radius-default * 2
+    background-color theme-color
+    color font-head-color

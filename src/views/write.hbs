@@ -1,11 +1,21 @@
 <div class="blog-write--scroll">
   <div class="blog-write--title">
-    <input type="text" class="blog-input--write typo" placeholder="请在此输入标题(必填)">
+    <input type="text" class="blog-input--write" placeholder="请在此输入标题(必填)">
   </div>
-  <div class="blog-write" id="editor-container" class="typo">
+  <div class="blog-write typo" id="editor-container">
   </div>
 </div>
-<div class="blog-write--control">
-  <a data-router="write/clean" href="javascript:;">清空</a>
-  <a data-router="write/submit" href="javascript:;">提交</a>
+
+<div class="blog-write--footer">
+  <div class="blog-write--classify">
+    <h3>分类</h3>
+    <ul class="blog-write--select">
+      {{#each list}}
+        <li data-column="{{_id}}">{{name}}</li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="blog-write--control">
+    <a class="blog-submit--article" data-router="write/submit" href="javascript:;">提交</a>
+  </div>
 </div>

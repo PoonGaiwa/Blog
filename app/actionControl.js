@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-17 18:57:47
+ * @LastEditTime: 2023-10-18 17:35:38
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -28,6 +28,7 @@ export default class Action {
     this.modalAgency()
     this.formAgency()
     this.routerAgency()
+    this.columnsAgency()
   }
   init() {
     // router.go('/index', { routeName: 'index', })
@@ -69,11 +70,18 @@ export default class Action {
   }
   // router
   routerAgency() {
+    // 监听其他点击事件
     $(document).on('click', 'a[data-router]', function (e) {
       let $target = $(this)
       let routeName = $target.data('router')
       let id = $target.data('id')
       router.go(`/${routeName}`, { routeName: routeName, id: id })
+    })
+  }
+
+  columnsAgency() {
+    $(document).on('click', 'li[data-column]', function (e) {
+      $(this).addClass('selected').siblings('li').removeClass('selected')
     })
   }
 }
