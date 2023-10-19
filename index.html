@@ -2,7 +2,7 @@
  * @Author: gaiwa gaiwa@163.com
  * @Date: 2023-09-29 17:06:49
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-18 15:38:38
+ * @LastEditTime: 2023-10-18 23:49:34
  * @FilePath: \express\myBlog\views\login.html
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -32,9 +32,8 @@
     <nav class="blog-head--nav flex">
       <ul class="blog-nav--item flex d-none d-md-flex me-auto">
         <li><a href="javascript:;">首页</a></li>
-        <li><a href="javascript:;">文章列表</a></li>
-        <li><a href="javascript:;">心得笔记</a></li>
-        <li><a href="javascript:;">资源链接</a></li>
+        <li><a href="javascript:;" data-router="columns">分类</a></li>
+        <li><a href="javascript:;">留言</a></li>
         <li><a href="javascript:;">相册</a></li>
         <li><a href="javascript:;">案例地址</a></li>
       </ul>
@@ -79,8 +78,6 @@
       </div>
       <div class="blog-main--container col-lg-8 col-md-8">
         <div class="blog-main-wrap">
-          <div class="blog-main-scroll">
-          </div>
         </div>
       </div>
     </div>

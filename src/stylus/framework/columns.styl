@@ -1,0 +1,27 @@
+.blog-columns
+  min-height 480px
+
+.blog-column--item
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  padding padding-space * 2
+  background-color bg-color-red
+  box-shadow 0 0 4px 1px #999 inset
+  p
+    padding padding-space
+    font-size: 14px
+    color font-common-color
+    line-height 2
+  &:nth-of-type(2n)
+    background-color bg-blue
+  &:nth-of-type(3n)
+    background-color bg-green
+
+for num in 2 4 6 8 1
+  .item-row-{num}
+    width num * 3vw
+  .item-column-{num}
+    height num * 3vw
+

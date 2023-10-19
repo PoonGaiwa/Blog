@@ -211,6 +211,20 @@ a:hover {
 .blog-tags--comment:hover {
   color: #8fa399;
 }
+.blog-content-never {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+.blog-item-btn {
+  display: block;
+  padding: 16px 0;
+}
+.blog-item-btn:hover {
+  font-weight: 500;
+  color: #8fa399;
+}
 .blog-modal {
   display: grid;
   position: fixed;
@@ -266,9 +280,6 @@ a:hover {
   left: 8px;
   font-size: 14px;
   color: #f00;
-}
-.blog-write--scroll {
-  position: relative;
 }
 #editor-container h1,
 #editor-container h2,
@@ -405,4 +416,58 @@ a:hover {
 .blog-message .alert.show {
   bottom: 0;
   opacity: 1;
+}
+.blog-columns {
+  min-height: 480px;
+}
+.blog-column--item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background-color: #ff4e50;
+  box-shadow: 0 0 4px 1px #999 inset;
+}
+.blog-column--item p {
+  padding: 8px;
+  font-size: 14px;
+  color: #333;
+  line-height: 2;
+}
+.blog-column--item:nth-of-type(2n) {
+  background-color: #69d2e7;
+}
+.blog-column--item:nth-of-type(3n) {
+  background-color: #a7dbd8;
+}
+.item-row-2 {
+  width: 6vw;
+}
+.item-column-2 {
+  height: 6vw;
+}
+.item-row-4 {
+  width: 12vw;
+}
+.item-column-4 {
+  height: 12vw;
+}
+.item-row-6 {
+  width: 18vw;
+}
+.item-column-6 {
+  height: 18vw;
+}
+.item-row-8 {
+  width: 24vw;
+}
+.item-column-8 {
+  height: 24vw;
+}
+.item-row-1 {
+  width: 3vw;
+}
+.item-column-1 {
+  height: 3vw;
 }

@@ -22,6 +22,8 @@
     "iscroll": "^5.2.0",
     "jsencrypt": "^3.3.2",
     "normalize.css": "^8.0.1",
+    "packery": "^2.1.2",
+    "qs": "^6.11.2",
     "sme-router": "^0.12.8",
     "store": "^2.0.12",
     "store.js": "^1.0.4",
