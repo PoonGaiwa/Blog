@@ -2,13 +2,13 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-03 15:59:02
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 17:25:18
+ * @LastEditTime: 2023-10-19 22:37:23
  * @FilePath: \express\myBlog\modules\modalControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import modalMap from './config/modal.config'
-import RegExpVerify from './validate'
-import Http from './http'
+import modalMap from '../config/modal.config'
+import RegExpVerify from '../module/validate'
+import Http from '../module/http'
 import TempCompile from './templateControl'
 import Router from './routerControl'
 

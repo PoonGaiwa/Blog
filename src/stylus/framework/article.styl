@@ -1,19 +1,32 @@
+.blog-article-wrap
+  border 1px solid bg-body-color
+  border-radius 4px
+  box-shadow 0 0 1px border-main-color inset
+  background-color bg-main-color
+
 .blog-article
-  padding 0 padding-space * 2
-  margin-bottom margin-space * 2
+  margin margin-space
+  padding 0 padding-space * 3
   h1,h2,h3,h4,h5,h6
     margin 0
     padding 0
     font-weight 700
 
+.blog-article--title
+  margin 0
+  padding 0
+
 .blog-article--info
   display column
   padding-bottom padding-space
-  margin-bottom margin-space * 2
+  margin 0 margin-space
   border-bottom 2px solid theme-color
+  &>div
+    padding 0
 
-  &:not(:last-of-type)
-    margin-bottom margin-space
+.blog-article--content
+  padding padding-space * 3 padding-space
+
 .blog-info--basic
   text-align left
   span
@@ -25,6 +38,3 @@
   span
     &:not(:last-of-type)
       padding-right padding-space
-
-.blog-article--footer
-  height 21vh

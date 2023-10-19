@@ -1,0 +1,23 @@
+<div class="blog-comment blog-comment--editor">
+  <h3 class="blog-comment--title">看文章是喜欢，评论才是真爱：</h3>
+  <textarea class="blog-comment--input" name="comment" cols="30" rows="10" data-input="comment" placeholder="请写下你的评论..."></textarea>
+  <div class="blog-comment--btn">
+    <a class="blog-comment--submit" href="javascript:;">评论</a>
+  </div>
+</div>
+<div class="blog-comment blog-comment--list">
+  <ul>
+    {{#each comments}}
+    <li class="blog-comment--item">
+      <div class="blog-comment--avatar">
+        <img src="{{uid.avatar}}" alt="!">
+      </div>
+      <div class="blog-comment--info">
+        <span class="blog-comment--username">{{uid.nickname}}</span>
+        <span class="blog-comment--content">{{content}}</span>
+        <span class="blog-comment--date">{{date}}</span>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>

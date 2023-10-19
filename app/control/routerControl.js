@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 17:23:46
+ * @LastEditTime: 2023-10-19 23:57:08
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,13 +14,14 @@
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import Http from './http';
+import Http from '../module/http';
 import TempCompile from './templateControl'
 import Router from 'sme-router'
-import util from './util/util';
-import Edite from './editor';
+import util from '../util/util';
+import Edite from '../module/editor';
+import Comment from '../module/comment'
 import store from 'store'
-import Message from './message';
+import Message from '../module/message';
 import Packery from 'packery';
 import QS from 'qs'
 
@@ -140,11 +141,30 @@ router.route('/article', async (req, res, next) => {
   let routeName = 'article'
   // 获取需要渲染的文章
   try {
-    let id = req.body.id;
-    let result = await Http({ type: 'getArticleById', data: { id } })
+    let articleId = req.body.id;
+    let result = await Http({ type: 'getArticleById', data: { id: articleId } })
     result = result.data
     result.date = util.formatDate(new Date(result.date), 'yyyy年mm月dd日')
+    result.comments.map(item => {
+      item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
+      return item
+    })
+    console.log(result);
     res.render(renderHandle(routeName, result))
+    // comment控制
+    new Comment({
+      eleInput: '.blog-comment--input',
+      eleSubmit: '.blog-comment--submit',
+      aid: articleId,
+      uid: store.get('uid')
+    }, async (data) => {
+      if (!data) {
+        return false
+      }
+      let result = await Http({ type: 'postComment', data })
+      router.go('/index', { routeName: 'index' })
+      router.go('/article', { routeName: 'article', id: articleId })
+    })
   } catch (err) {
     console.log(err);
   }

@@ -5,6 +5,13 @@
     position relative !important
     height 60vh !important
 
+.blog-write-wrap
+  padding  0 padding-space * 2
+  box-shadow 0 0 1px border-main-color 
+  border 1px solid bg-main-color
+  border-radius border-radius-default * .5
+  background-color bg-main-color
+
 .blog-write--title
   margin margin-space * 2 0
 
@@ -19,13 +26,13 @@
   &:focus
     outline none
   &::placeholder
-    color font-writeplaceh-color
+    color font-writeplace-color
 
 .placeholder
-  color font-writeplaceh-color !important
+  color font-writeplace-color !important
 
 .blog-write--footer
-  margin-top margin-space * 2
+  margin margin-space * 2 0
 
 .blog-write--classify
   display flex
@@ -66,9 +73,12 @@
   padding padding-space
 
 .blog-submit--article
-  padding padding-space * .5 padding-space *2
+  padding padding-space * .2 padding-space *3
+  color font-head-color
+  border-radius border-radius-default * .5
+  background-color theme-color
   &:hover
-    border 1px solid #ccc
-    border-radius border-radius-default * 2
-    background-color theme-color
-    color font-head-color
+    color lighten(font-head-color,20%)
+    background-color lighten(theme-color, 20%)
+
+

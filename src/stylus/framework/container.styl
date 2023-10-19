@@ -1,20 +1,17 @@
 .blog-main-wrap
   position relative
-  padding padding-space
   min-height 80vh
-  border-radius border-radius-default * .5
-  box-shadow 0 0 2px border-main-color
-  
+  background-color bg-main-color
+
 .blog-content--item
+  box-shadow 0 0 1px border-main-color
   text-align center
   color font-main-color
-  &:not(:last-of-type)
-    margin-bottom margin-space
 
 .blog-content-link
   display block
   background-color bg-main-color
-  border-radius border-radius-default * .5
+  // border-radius border-radius-default * .5
   transition .3s
   &:hover
     box-shadow 0 0 3px theme-color inset

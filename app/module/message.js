@@ -1,4 +1,4 @@
-import template from './templateControl'
+import template from '../control/templateControl'
 import 'animate.css'
 export default class Message {
   constructor(msg = '未知错误') {
