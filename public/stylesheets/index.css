@@ -265,15 +265,11 @@ a:hover {
   border: 1px solid #bdc9cd;
   color: #555;
 }
-.blog-content--username,
-.blog-content--email,
-.blog-content--password {
+.blog-modal--content>div {
   position: relative;
   padding-bottom: 24px;
 }
-.blog-content--username::after,
-.blog-content--email::after,
-.blog-content--password::after {
+.blog-modal--content>div::after {
   content: attr(data-msg);
   position: absolute;
   top: 78px;
@@ -428,6 +424,11 @@ a:hover {
   padding: 16px;
   background-color: #ff4e50;
   box-shadow: 0 0 4px 1px #999 inset;
+  transition: 0.3s;
+}
+.blog-column--item:hover {
+  z-index: 1;
+  transform: scale(1.1);
 }
 .blog-column--item p {
   padding: 8px;
@@ -470,4 +471,8 @@ a:hover {
 }
 .item-column-1 {
   height: 3vw;
+}
+.blog-column--add::after {
+  content: '+';
+  font-size: 3em;
 }

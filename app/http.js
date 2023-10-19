@@ -46,6 +46,10 @@ const REQUEST_MAP = {
     url: '/api/rest/articles',
     method: 'POST'
   },
+  'postColumn': {
+    url: '/api/rest/columns',
+    method: 'POST'
+  },
   'columns': {
     url: '/api/rest/columns',
     method: "GET"

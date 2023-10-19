@@ -9,6 +9,11 @@
   padding padding-space * 2
   background-color bg-color-red
   box-shadow 0 0 4px 1px #999 inset
+  transition .3s
+  &:hover
+    z-index 1
+    transform scale(1.1)
+
   p
     padding padding-space
     font-size: 14px
@@ -24,4 +29,8 @@ for num in 2 4 6 8 1
     width num * 3vw
   .item-column-{num}
     height num * 3vw
+
+.blog-column--add::after
+  content '+'
+  font-size 3em
 

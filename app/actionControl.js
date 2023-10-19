@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 01:02:23
+ * @LastEditTime: 2023-10-19 17:15:59
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -39,6 +39,7 @@ export default class Action {
     $(document).on('click', ['data-modal'], (e) => {
       let $target = $(e.target)
       let modalType = $target.data('modal')
+      console.log(modalType);
       // 防止模板渲染 data-modal属性值缺失
       if (!modalType) {
         return false

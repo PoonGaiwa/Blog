@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-05 00:44:27
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-16 19:47:45
+ * @LastEditTime: 2023-10-19 17:09:01
  * @FilePath: \express\myBlog\modules\validate.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -74,6 +74,14 @@ export default class RegExpVerify {
             message: '密码不能为空'
           }
         }
+      },
+      'postColumn': {
+        name: {
+          presence: {
+            allowEmpty: false,
+            message: '分类名称不能为空'
+          }
+        }
       }
     }
     this.regValidate()
@@ -91,7 +99,11 @@ export default class RegExpVerify {
     if (result?.email) {
       this.error.email = result.email[0]
     }
-    if (result?.password)
+    if (result?.password) {
       this.error.password = result.password[0]
+    }
+    if (result?.name) {
+      this.error.name = result.name[0]
+    }
   }
 }
