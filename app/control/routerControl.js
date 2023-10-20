@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-20 12:49:17
+ * @LastEditTime: 2023-10-20 19:27:50
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -82,26 +82,9 @@ router.route('/index', async (req, res, next) => {
   } else {
     res.render(renderHandle(routeName, { isLogin: false }))
   }
-  // 获取文章列表并渲染
-  try {
-    let columnId = req.body.columnId
-    let result
-    if (columnId) {
-      result = await Http({ type: 'articles', data: { query: QS.stringify({ column: columnId }) } })
-    } else {
-      result = await Http({ type: 'articles' })
-    }
-    result = result.data
-    result.list = result.list.map(item => {
-      // item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
-      item.content = `${$(item.content).text().slice(0, 120)}...`
-      return item
-    })
-    result.columnId = columnId
-    res.render(renderHandle('articles', result))
-  } catch (err) {
-    console.log(err);
-  }
+  let reqBody = { ...req.body }
+  reqBody.routeName = 'articles'
+  router.go('/articles', reqBody)
 })
 
 router.route('/columns', async (req, res, next) => {
@@ -129,15 +112,27 @@ router.route('/columns', async (req, res, next) => {
   }
 })
 
+router.route('/articles', async (req, res, next) => {
+  let routeName = 'articles'
+  // 获取文章列表并渲染
+  try {
+    let columnId = req.body.columnId
+    let q = req.body.search
+    let queryObj = { column: columnId, q }
+    let result = await Http({ type: routeName, data: { query: QS.stringify(queryObj) } })
+    result = result.data
+    result.columnId = columnId
+    result.list = result.list.map(item => {
+      item.content = `${$(item.content).text().slice(0, 120)}...`
+      return item
+    })
+    res.render(renderHandle('articles', result))
+  } catch (err) {
+    console.log(err);
+  }
+})
 
 router.route('/article', async (req, res, next) => {
-  // 根据token自动登录渲染对应页面
-  let token = store.get('ua_jot')
-  if (token) {
-    res.render(renderHandle('index', { isLogin: true }))
-  } else {
-    res.render(renderHandle('index', { isLogin: false }))
-  }
   let routeName = 'article'
   // 获取需要渲染的文章
   try {
@@ -145,7 +140,6 @@ router.route('/article', async (req, res, next) => {
     let result = await Http({ type: 'getArticleById', data: { id: articleId } })
     result = result.data
     res.render(renderHandle(routeName, result))
-
     // comment控制
     new Comment({
       eleListen: '.blog-comment--editor',
@@ -158,9 +152,8 @@ router.route('/article', async (req, res, next) => {
         return false
       }
       let result = await Http({ type: 'postComment', data })
-      //Todo提交评论会造成多次提交bug
       router.go('/',)
-      router.go('/article', { routeName: 'article', id: articleId })
+      router.go('/article', { id: articleId })
     })
   } catch (err) {
     console.log(err);
@@ -210,9 +203,9 @@ router.route('/write/:active', async (req, res, next) => {
       let result = await Http({ type: 'postArticle', data: { title, content, column, cover, author: store.get('uid') } })
       result = result.data
       title = ''
-      router.go('/article', { routeName: 'article', id: result.id })
+      router.go('/article', { id: result.id })
     } catch (err) {
-      router.go('/write', { routeName: 'write' })
+      router.go('/write')
       console.log(err);
     }
   }
@@ -225,7 +218,7 @@ router.route('/', (req, res, next) => {
 
 router.route('*', (req, res, next) => {
   if (!req.routeName || req.routeName === 'undefined') {
-    router.go('/index', { routeName: 'index' })
+    router.go('/index')
   }
 })
 

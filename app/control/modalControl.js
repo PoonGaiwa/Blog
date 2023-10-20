@@ -89,7 +89,6 @@ export default class Modal {
   verifyForm(submitData) {
     let result = new RegExpVerify(this.modalType, submitData)
     // 如果验证通过，将数据发送给后端验证
-    console.log(result);
     if (result.status !== 0) {
       this.userAction(submitData)
     } else {
@@ -108,7 +107,6 @@ export default class Modal {
     try {
       let result = await Http({ type: this.modalType, data: formData })
       // 登录成功200
-      console.log(result);
       if (result.statusCode == '200') {
         this.msg = '成功'
         RES_HANDLE[this.modalType]()

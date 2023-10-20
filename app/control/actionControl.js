@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-20 13:06:29
+ * @LastEditTime: 2023-10-20 19:27:10
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -29,9 +29,10 @@ export default class Action {
     this.formAgency()
     this.routerAgency()
     this.columnsAgency()
+    this.searchAgency()
   }
   init() {
-    router.go('/index', { routeName: 'index', })
+    router.go('/index')
   }
   // modal
   modalAgency() {
@@ -57,10 +58,48 @@ export default class Action {
       }
     })
   }
+  // 搜索
+  searchAgency() {
+    function routeSearch(target) {
+      let val = $(target).val()
+      if (val) {
+        let routeName = $(target).data('input')
+        $(target).val('')
+        router.go('/')
+        router.go(`/${routeName}`, {
+          routeName, search: val
+        })
+      }
+      $(target).val('').trigger('blur')
+    }
+    function getSearchValue(e) {
+      if (e.keyCode === 13) {
+        routeSearch(e.target)
+      }
+    }
+    $(document).on('focus', '[data-input]', (e) => {
+      let $inputTarget = $(e.target)
+      $inputTarget.on('keyup', getSearchValue)
+    })
+
+    $(document).on('blur', '[data-input]', (e) => {
+      let $inputTarget = $(e.target)
+      $inputTarget.off('keyup', getSearchValue)
+    })
+
+    // 搜索行为 点击事件
+    $(document).on('click', '[data-submit]', (e) => {
+      let $target = $(e.target)
+      let submitType = $target.data('submit')
+      let $input = $(`[data-input=${submitType}]`)
+      routeSearch($input)
+    })
+
+  }
   // form
   formAgency() {
     // form input 开始输入时 清除错误提示
-    $(document).on('keyup', 'input[data-modal-input]', (e) => {
+    $(document).on('change', 'input[data-modal-input]', (e) => {
       let $target = $(e.target)
       let inputEle = $target.parent().parent().children()
       $.each(inputEle, (idx, ele) => {
@@ -76,7 +115,7 @@ export default class Action {
       let routeName = $target.data('router')
       let id = $target.data('article-id')
       let columnId = $target.data('column-id')
-      router.go(`/${routeName}`, { routeName: routeName, id, columnId })
+      router.go(`/${routeName}`, { id, columnId })
     })
   }
 
