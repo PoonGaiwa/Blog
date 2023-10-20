@@ -1,0 +1,6 @@
+{{#each list}}
+  <a href="javascript:;" class="blog-toolbar--item" {{#if route}} data-router="{{route}}"{{/if}}>
+    <i class="iconfont icon-{{icon}} blog-toobar--icon"></i>
+    <span class="blog-toolbar--{{icon}}">{{content}}</span>
+  </a>
+{{/each}}

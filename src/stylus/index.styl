@@ -8,6 +8,7 @@
 @import './framework/columns.styl'
 @import './framework/comment.styl'
 @import './framework/footer.styl'
+@import './framework/toolbar.styl'
 
 @font-face {
   font-family: "iconfont"; 
@@ -24,18 +25,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-write:before {
+  content: "\e60e";
+}
+
 .icon-comment:before {
   content: "\e601";
 }
 
-.icon-dianzan:before {
+.icon-like:before {
   content: "\ec7f";
 }
 
-.icon-liulan:before {
+.icon-browse:before {
   content: "\e816";
 }
-
 
 body
   background-color bg-body-color

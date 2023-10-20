@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-07 19:44:24
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 22:34:42
+ * @LastEditTime: 2023-10-20 23:20:25
  * @FilePath: \myBlog_client\app\templateControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,9 +14,10 @@ import message from '../../src/views/message.hbs'
 import articles from '../../src/views/articles.hbs'
 import columns from '../../src/views/columns.hbs'
 import comment from '../../src/views/comment.hbs'
+import toolbar from '../../src/views/toolbar.hbs'
 
 const TEMP_MAP = {
-  user, modal, write, article, message, articles, columns, comment
+  user, modal, write, article, message, articles, columns, comment, toolbar
 }
 
 export default class TempCompile {

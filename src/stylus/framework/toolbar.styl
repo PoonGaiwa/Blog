@@ -1,0 +1,32 @@
+.blog-toolbar
+  position fixed
+  top 120px
+  right 50%
+  margin-right -800px
+  width 100px
+  background-color bg-main-color
+  border-radius border-radius-default
+  @media screen and (max-width 1190px)
+    margin-right -560px
+  @media screen and (max-width 990px)
+    margin-right -460px
+  
+.blog-toolbar--item
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  height 100px
+  color font-main-color
+  &:hover
+    color theme-color
+  &:not(:last-of-type)
+    border-bottom 1px solid border-grey-color
+
+.blog-toobar--icon
+  font-size 42px !important
+  line-height 42px
+
+.blog-toolbar--write
+  font-size 14px
+  letter-spacing 2px

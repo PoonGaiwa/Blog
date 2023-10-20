@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6399129",
+      "name": "发文章",
+      "font_class": "weibiaoti--",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
       "icon_id": "201642",
       "name": "3.1 评论",
       "font_class": "comment",

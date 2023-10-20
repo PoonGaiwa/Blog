@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-20 19:27:50
+ * @LastEditTime: 2023-10-21 00:07:51
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -49,8 +49,32 @@ const ROUTE_MAP = {
   'columns': {
     wrap: '.blog-main--container',
     tempName: 'columns'
+  },
+  'toolbar': {
+    wrap: '.blog-toolbar',
+    tempName: 'toolbar'
   }
 }
+
+// const TOOLBAR_MAP = {
+//   'index': [
+//     {
+//       route: 'write',
+//       content: '写文章',
+//       icon: 'write'
+//     }
+//   ],
+//   'article': [
+//     {
+//       content: result.like_num,
+//       icon: 'like'
+//     },
+//     {
+//       content: result.comment_num,
+//       icon: 'comment'
+//     }
+//   ]
+// }
 
 function routeHandle(routeName) {
   let type = routeName
@@ -69,9 +93,18 @@ function renderHandle(routeName, data) {
 }
 
 
+
 // 实例化参数 模板渲染内容的容器的id名称
 const router = new Router('page')
 let editor, title = ''
+
+router.use((req) => {
+  let type = req.body?.routeName
+  req.routeName = type
+  router.render(renderHandle('toolbar', {
+    list: []
+  }))
+})
 
 router.route('/index', async (req, res, next) => {
   let routeName = 'index'
@@ -101,8 +134,7 @@ router.route('/columns', async (req, res, next) => {
     result = result.data
     result.list = result.list.map(item => {
       let len = item.aid.length
-      item.col = (len + 1) * 2
-      item.row = (len + 1) * 2
+      item.size = Math.min((len + 1) * 2, 8)
       return item
     })
     res.render(renderHandle('columns', { list: result.list }))
@@ -127,6 +159,13 @@ router.route('/articles', async (req, res, next) => {
       return item
     })
     res.render(renderHandle('articles', result))
+    res.render(renderHandle('toolbar', {
+      list: [{
+        route: 'write',
+        content: '写文章',
+        icon: 'write'
+      }]
+    }))
   } catch (err) {
     console.log(err);
   }
@@ -140,6 +179,18 @@ router.route('/article', async (req, res, next) => {
     let result = await Http({ type: 'getArticleById', data: { id: articleId } })
     result = result.data
     res.render(renderHandle(routeName, result))
+    res.render(renderHandle('toolbar', {
+      list: [
+        {
+          content: result.like_num,
+          icon: 'like'
+        },
+        {
+          content: result.comment_num,
+          icon: 'comment'
+        }
+      ]
+    }))
     // comment控制
     new Comment({
       eleListen: '.blog-comment--editor',
@@ -151,7 +202,7 @@ router.route('/article', async (req, res, next) => {
       if (!data) {
         return false
       }
-      let result = await Http({ type: 'postComment', data })
+      await Http({ type: 'postComment', data })
       router.go('/',)
       router.go('/article', { id: articleId })
     })
