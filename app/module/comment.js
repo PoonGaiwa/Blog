@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-19 22:10:33
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 23:31:05
+ * @LastEditTime: 2023-10-20 12:48:29
  * @FilePath: \myBlog_client\app\comment.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,7 +18,8 @@ const ERROR_MAP = {
 }
 
 export default class Comment {
-  constructor({ eleInput, eleSubmit, aid, uid }, callback) {
+  constructor({ eleListen, eleInput, eleSubmit, aid, uid }, callback) {
+    this.eleListen = eleListen
     this.eleInput = eleInput
     this.eleSubmit = eleSubmit
     this.callback = callback
@@ -30,7 +31,7 @@ export default class Comment {
     this.listen()
   }
   listen() {
-    $(document).on('click', this.eleSubmit, (e) => {
+    $(this.eleListen).on('click', this.eleSubmit, (e) => {
       e.preventDefault()
       let data = {}
       let content = $(this.eleInput).html() || $(this.eleInput).val()

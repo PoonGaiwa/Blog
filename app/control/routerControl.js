@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 23:57:08
+ * @LastEditTime: 2023-10-20 12:49:17
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -93,7 +93,7 @@ router.route('/index', async (req, res, next) => {
     }
     result = result.data
     result.list = result.list.map(item => {
-      item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
+      // item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
       item.content = `${$(item.content).text().slice(0, 120)}...`
       return item
     })
@@ -144,15 +144,11 @@ router.route('/article', async (req, res, next) => {
     let articleId = req.body.id;
     let result = await Http({ type: 'getArticleById', data: { id: articleId } })
     result = result.data
-    result.date = util.formatDate(new Date(result.date), 'yyyy年mm月dd日')
-    result.comments.map(item => {
-      item.date = util.formatDate(new Date(item.date), 'yyyy年mm月dd日')
-      return item
-    })
-    console.log(result);
     res.render(renderHandle(routeName, result))
+
     // comment控制
     new Comment({
+      eleListen: '.blog-comment--editor',
       eleInput: '.blog-comment--input',
       eleSubmit: '.blog-comment--submit',
       aid: articleId,
@@ -162,7 +158,8 @@ router.route('/article', async (req, res, next) => {
         return false
       }
       let result = await Http({ type: 'postComment', data })
-      router.go('/index', { routeName: 'index' })
+      //Todo提交评论会造成多次提交bug
+      router.go('/',)
       router.go('/article', { routeName: 'article', id: articleId })
     })
   } catch (err) {
@@ -186,7 +183,6 @@ router.route('/write', async (req, res, next) => {
       }
       return acc
     }, 0)
-    console.log(result);
     result = result.map((item, idx) => {
       item.selected = idx === selectedIdx
       return item
@@ -212,9 +208,7 @@ router.route('/write/:active', async (req, res, next) => {
     let content = editor.html
     try {
       let result = await Http({ type: 'postArticle', data: { title, content, column, cover, author: store.get('uid') } })
-      console.log(result);
       result = result.data
-      console.log(result);
       title = ''
       router.go('/article', { routeName: 'article', id: result.id })
     } catch (err) {

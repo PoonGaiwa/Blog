@@ -110,7 +110,7 @@ a:hover {
   padding: 48px 0;
   box-shadow: 0 0 2px #999;
   border-radius: 12px;
-  background-color: #fcfcfc;
+  background-color: #fff;
 }
 .blog-avatar {
   overflow: hidden;
@@ -154,7 +154,7 @@ a:hover {
 .blog-main-wrap {
   position: relative;
   min-height: 80vh;
-  background-color: #fcfcfc;
+  background-color: #fff;
 }
 .blog-content--item {
   box-shadow: 0 0 1px #999;
@@ -163,7 +163,7 @@ a:hover {
 }
 .blog-content-link {
   display: block;
-  background-color: #fcfcfc;
+  background-color: #fff;
   transition: 0.3s;
 }
 .blog-content-link:hover {
@@ -284,12 +284,20 @@ a:hover {
   position: relative !important;
   height: 60vh !important;
 }
+#editor-container img {
+  left: 0;
+  right: 0;
+  margin: 16px auto;
+  display: block;
+  width: 50%;
+  height: auto;
+}
 .blog-write-wrap {
   padding: 0 16px;
   box-shadow: 0 0 1px #999;
-  border: 1px solid #fcfcfc;
+  border: 1px solid #fff;
   border-radius: 4px;
-  background-color: #fcfcfc;
+  background-color: #fff;
 }
 .blog-write--title {
   margin: 16px 0;
@@ -307,10 +315,11 @@ a:hover {
   outline: none;
 }
 .blog-input--write::placeholder {
-  color: #999;
+  color: #ccc;
 }
+.blog-write,
 .placeholder {
-  color: #999 !important;
+  color: #ccc !important;
 }
 .blog-write--footer {
   margin: 16px 0;
@@ -372,7 +381,7 @@ a:hover {
   border: 1px solid #f7f8fc;
   border-radius: 4px;
   box-shadow: 0 0 1px #999 inset;
-  background-color: #fcfcfc;
+  background-color: #fff;
 }
 .blog-article {
   margin: 8px;
@@ -392,11 +401,14 @@ a:hover {
   margin: 0;
   padding: 0;
 }
+.blog-article--author {
+  color: #8fa399;
+}
 .blog-article--info {
   display: column;
-  padding-bottom: 8px;
+  padding: 8px 16px;
   margin: 0 8px;
-  border-bottom: 2px solid #8fa399;
+  background-color: #f7f8fc;
 }
 .blog-article--info>div {
   padding: 0;
@@ -404,8 +416,17 @@ a:hover {
 .blog-article--content {
   padding: 24px 8px;
 }
+.blog-article--content img {
+  left: 0;
+  right: 0;
+  margin: 16px auto;
+  display: block;
+  width: 50%;
+  height: auto;
+}
 .blog-info--basic {
   text-align: left;
+  font-size: 14px;
 }
 .blog-info--basic span:not(:last-of-type) {
   padding-right: 8px;
@@ -413,8 +434,20 @@ a:hover {
 .blog-article--tags {
   text-align: right;
 }
+.blog-article--tags span {
+  color: #ccc;
+}
+.blog-article--tags span::before {
+  padding-right: 4px;
+}
 .blog-article--tags span:not(:last-of-type) {
-  padding-right: 8px;
+  padding-right: 32px;
+}
+.blog-article--date {
+  margin-top: 16px;
+  color: #ccc;
+  font-size: 14px;
+  text-align: center;
 }
 .blog-message {
   position: fixed;
@@ -434,8 +467,9 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 16px;
-  background-color: #ff4e50;
+  min-height: 100px;
+  min-width: 100px;
+  background-color: #f2ede1;
   box-shadow: 0 0 4px 1px #999 inset;
   transition: 0.3s;
 }
@@ -450,10 +484,10 @@ a:hover {
   line-height: 2;
 }
 .blog-column--item:nth-of-type(2n) {
-  background-color: #69d2e7;
+  background-color: #b3ccb1;
 }
 .blog-column--item:nth-of-type(3n) {
-  background-color: #a7dbd8;
+  background-color: #97ad97;
 }
 .item-row-2 {
   width: 6vw;
@@ -494,7 +528,7 @@ a:hover {
   border: 1px solid #f7f8fc;
   border-radius: 4px;
   box-shadow: 0 0 1px #999 inset;
-  background-color: #fcfcfc;
+  background-color: #fff;
 }
 .blog-comment--editor {
   padding: 32px 80px;
@@ -502,7 +536,7 @@ a:hover {
 .blog-comment--title {
   font-weight: 300;
   font-size: 16px;
-  color: #999;
+  color: #ccc;
   margin-bottom: 16px;
 }
 .blog-comment--input {
@@ -514,7 +548,7 @@ a:hover {
   resize: none;
 }
 .blog-comment--input::placeholder {
-  color: #999;
+  color: #ccc;
 }
 .blog-comment--input:focus {
   outline: 1px solid #8fa399;
@@ -562,7 +596,7 @@ a:hover {
   margin-bottom: 16px;
 }
 .blog-comment--date {
-  color: #999;
+  color: #ccc;
 }
 .blog-foot {
   display: flex;
@@ -578,6 +612,26 @@ a:hover {
 }
 .blog-foot-content li:not(:last-of-type) {
   margin-right: 8px;
+}
+@font-face {
+  font-family: "iconfont";
+  src: url("../icon/iconfont.woff2?t=1697774086716") format('woff2'), url("../icon/iconfont.woff?t=1697774086716") format('woff'), url("../icon/iconfont.ttf?t=1697774086716") format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-comment:before {
+  content: "\e601";
+}
+.icon-dianzan:before {
+  content: "\ec7f";
+}
+.icon-liulan:before {
+  content: "\e816";
 }
 body {
   background-color: #f7f8fc;

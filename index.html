@@ -2,7 +2,7 @@
  * @Author: gaiwa gaiwa@163.com
  * @Date: 2023-09-29 17:06:49
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 17:40:11
+ * @LastEditTime: 2023-10-20 00:26:18
  * @FilePath: \express\myBlog\views\login.html
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -27,11 +27,12 @@
   <!-- header -->
   <header class="blog-head container-fluid flex">
     <h1 class="blog-head--logo">
-      <a class="navbar-brand flex" href="#"><img src="./images/blog_logo.png" alt="!"></a>
+      <a class="navbar-brand flex" href="javascript:;" data-router="index"><img src="./images/blog_logo.png"
+          alt="!"></a>
     </h1>
     <nav class="blog-head--nav flex">
       <ul class="blog-nav--item flex d-none d-md-flex me-auto">
-        <li><a href="javascript:;">首页</a></li>
+        <li><a href="javascript:;" data-router="index">首页</a></li>
         <li><a href="javascript:;" data-router="columns">分类</a></li>
         <li><a href="javascript:;">留言</a></li>
         <li><a href="javascript:;">相册</a></li>

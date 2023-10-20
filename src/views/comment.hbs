@@ -5,6 +5,7 @@
     <a class="blog-comment--submit" href="javascript:;">评论</a>
   </div>
 </div>
+{{#if comments.length}}
 <div class="blog-comment blog-comment--list">
   <ul>
     {{#each comments}}
@@ -21,3 +22,4 @@
     {{/each}}
   </ul>
 </div>
+{{/if}}
