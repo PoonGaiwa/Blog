@@ -1,0 +1,20 @@
+<div class="blog-user-info">
+  <div class="blog-user--head">
+    <h4 class="blog-user--title">{{title}}</h4>
+  </div>
+  <form id="{{formType}}" action="javascript:;">
+    <div class="blog-user--content">
+      {{#each formData}}
+      <div class="blog-user--{{query}}" data-type="{{query}}" data-msg="">
+        <label for="{{query}}" class="blog-user-label">{{label}}</label>
+        <input id="{{query}}" type="{{type}}" {{#if readonly}}readonly{{/if}}  name="{{query}}" data-modal-input="{{query}}" class="form-control" placeholder="{{placeholder}}" {{#if value}}value="{{value}}"{{/if}}>
+      </div>
+      {{/each}}
+    </div>
+    <div class="blog-user--foot">
+    {{#each btns}}
+    <button class="blog-user--{{targetName}} btn" id="{{targetName}}" type="{{type}}" data-modal-btn="{{targetName}}" >{{name}}</button>
+    {{/each}}
+  </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.blog-user-info
+  border 1px solid bg-body-color
+  border-radius 4px
+  box-shadow 0 0 1px border-main-color inset
+  padding padding-space * 4 padding-space * 4
+  background-color bg-main-color
+
+.blog-user--head
+  margin-bottom margin-space * 4
+
+input#username[readonly].form-control
+  &:focus,
+  &:focus-visible,
+    border none
+    outline none !important
+    box-shadow 0 0 0 #ced4da
+
+.blog-user--content
+  div
+    display flex
+    &:not(:last-of-type)
+      margin-bottom margin-space * 4
+
+.blog-user-label
+  width 60px
+  margin-right margin-space
+
+.blog-user--foot
+  display flex
+  justify-content flex-end
+  margin-top margin-space *2
+
+.blog-user--confirm
+  padding padding-space * .5  padding-space *3
+  color font-head-color
+  border-radius border-radius-default * .5
+  background-color theme-color
+  &:hover
+    color lighten(font-head-color,20%)
+    background-color lighten(theme-color, 20%)
+

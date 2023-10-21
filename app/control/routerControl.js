@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-08 15:05:18
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-21 00:07:51
+ * @LastEditTime: 2023-10-21 20:05:10
  * @FilePath: \myBlog_client\app\routerControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -17,14 +17,15 @@
 import Http from '../module/http';
 import TempCompile from './templateControl'
 import Router from 'sme-router'
-import util from '../util/util';
 import Edite from '../module/editor';
 import Comment from '../module/comment'
 import store from 'store'
-import Message from '../module/message';
 import Packery from 'packery';
 import QS from 'qs'
+import modalMap from '../config/modal.config'
+import Message from '../module/message';
 
+const userInfoName = 'ua_info'
 const ROUTE_MAP = {
   'write': {
     wrap: '.blog-main--container',
@@ -53,28 +54,16 @@ const ROUTE_MAP = {
   'toolbar': {
     wrap: '.blog-toolbar',
     tempName: 'toolbar'
+  },
+  'info': {
+    wrap: '.blog-main--container',
+    tempName: 'userInfo'
+  },
+  'slider': {
+    wrap: '.blog-slide-wrap',
+    tempName: 'slider'
   }
 }
-
-// const TOOLBAR_MAP = {
-//   'index': [
-//     {
-//       route: 'write',
-//       content: '写文章',
-//       icon: 'write'
-//     }
-//   ],
-//   'article': [
-//     {
-//       content: result.like_num,
-//       icon: 'like'
-//     },
-//     {
-//       content: result.comment_num,
-//       icon: 'comment'
-//     }
-//   ]
-// }
 
 function routeHandle(routeName) {
   let type = routeName
@@ -112,6 +101,16 @@ router.route('/index', async (req, res, next) => {
   // 根据token自动登录渲染对应页面
   if (result?.message === 'ok') {
     res.render(renderHandle(routeName, { isLogin: true }))
+    let userInfo = store.get(userInfoName)
+    if (!userInfo) {
+      try {
+        userInfo = await Http({ type: 'getUserInfo' })
+        store.set(userInfoName, userInfo)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    res.render(renderHandle('slider', userInfo.data))
   } else {
     res.render(renderHandle(routeName, { isLogin: false }))
   }
@@ -211,7 +210,27 @@ router.route('/article', async (req, res, next) => {
   }
 })
 
-
+router.route('/info', async (req, res, next) => {
+  let routeName = 'info'
+  let data = modalMap[routeName]
+  try {
+    let userInfo = store.get(userInfoName)
+    if (!userInfo) {
+      new Message('请先登录').warning()
+    }
+    if (userInfo) {
+      let result = await Http({ type: 'getUserInfo' })
+      data.formData = data.formData.map(item => {
+        let key = item.query
+        item.value = result.data[key]
+        return item
+      })
+    }
+    res.render(renderHandle(routeName, data))
+  } catch (err) {
+    console.log(err);
+  }
+})
 
 // 过滤无routeName 重定向到初始目录
 router.route('/write', async (req, res, next) => {
@@ -243,7 +262,6 @@ router.route('/write', async (req, res, next) => {
   })
 })
 
-
 router.route('/write/:active', async (req, res, next) => {
   let routeName = req.body.routeName
   if (editor) {
@@ -261,7 +279,6 @@ router.route('/write/:active', async (req, res, next) => {
     }
   }
 })
-
 
 router.route('/', (req, res, next) => {
 

@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 15:58:20
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-20 19:27:10
+ * @LastEditTime: 2023-10-21 18:15:18
  * @FilePath: \express\myBlog\modules\actionControl.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -44,8 +44,13 @@ export default class Action {
       if (!modalType) {
         return false
       }
-      this.modal = new Modal({ modalType })
-      this.modal.render()
+      if (modalType === 'info') {
+        this.modal = new Modal({ modalWrap: $('.blog-main--container'), modalType })
+      }
+      if (modalType !== 'info') {
+        this.modal = new Modal({ modalType })
+        this.modal.render()
+      }
     })
     // 监听modal上的button
     // 由于插件之间冲突，无法监听表单的submit事件，因此写在button的点击事件中

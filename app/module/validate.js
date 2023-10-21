@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-05 00:44:27
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 17:09:01
+ * @LastEditTime: 2023-10-21 13:29:55
  * @FilePath: \express\myBlog\modules\validate.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -80,6 +80,25 @@ export default class RegExpVerify {
           presence: {
             allowEmpty: false,
             message: '分类名称不能为空'
+          }
+        }
+      },
+      'info': {
+        nickname: {
+          presence: {
+            allowEmpty: false,
+            message: '分类名称不能为空'
+          }
+        },
+        email: {
+          presence: {
+            allowEmpty: false,
+            message: '邮箱不能为空'
+          },
+          format: {
+            pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,
+            flag: 'g',
+            message: '请输入正确的用户名 必须以字母开头,允许包含字母数字下划线,长度在5-16之间'
           }
         }
       }

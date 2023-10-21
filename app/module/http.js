@@ -2,7 +2,7 @@
  * @Author: Gaiwa 13012265332@163.com
  * @Date: 2023-10-06 16:02:57
  * @LastEditors: Gaiwa 13012265332@163.com
- * @LastEditTime: 2023-10-19 23:14:55
+ * @LastEditTime: 2023-10-21 18:20:03
  * @FilePath: \express\myBlog\modules\Http.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -66,6 +66,14 @@ const REQUEST_MAP = {
   'uploadArticle': {
     url: '/upload/article',
     method: 'POST'
+  },
+  'getUserInfo': {
+    url: '/info',
+    method: 'GET'
+  },
+  'putUserInfo': {
+    url: '/info',
+    method: 'PUT'
   }
 }
 
@@ -112,6 +120,9 @@ export default async function Http({ type, data }) {
       // 本地存储token
       store.set(TOKENNAME, token);
       store.set('uid', uid)
+    }
+    if (!noMessage && type === 'putUserInfo') {
+      new Message(result.message).success()
     }
     return result
   } catch (err) {
